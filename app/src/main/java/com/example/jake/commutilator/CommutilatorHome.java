@@ -1,5 +1,6 @@
 package com.example.jake.commutilator;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +14,6 @@ public class CommutilatorHome extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commutilator_home);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -30,8 +30,9 @@ public class CommutilatorHome extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_vehicle_configuration) {
+            Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
+            startActivity(vehicleConfigurationIntent);
         }
 
         return super.onOptionsItemSelected(item);
