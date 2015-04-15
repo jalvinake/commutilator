@@ -10,14 +10,14 @@ import java.util.ArrayList;
  */
 @Root(name="menuItems")
 public class MenuItemList {
-    public ArrayList<menuItem> getMenuItems() {
+    public ArrayList<VehicleMenuItem> getMenuItems() {
         return menuItems;
     }
 
-    public void setMenuItems(ArrayList<menuItem> menuItems) {
+    public void setMenuItems(ArrayList<VehicleMenuItem> menuItems) {
         this.menuItems = menuItems;
     }
 
     @ElementList(inline=true)
-    private ArrayList<menuItem> menuItems;
+    private ArrayList<VehicleMenuItem> menuItems;
 }
