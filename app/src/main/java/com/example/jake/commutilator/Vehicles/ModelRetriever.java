@@ -18,4 +18,15 @@ public class ModelRetriever extends  VehicleMenuItemsRetriever {
 
         return getMenuItemsFromAPI(modelUrlWithParameters);
     }
+
+//    @Override
+//    public VehicleMenuItem GetSelectedMenuItem(ArrayList<VehicleMenuItem> vehicleMenuItems) {
+//        for(VehicleMenuItem vehicleMenuItem : vehicleMenuItems) {
+//            if(vehicleMenuItem.Text == _vehicle.getModel()) {
+//                return vehicleMenuItem;
+//            }
+//        }
+//
+//        return null;
+//    }
 }

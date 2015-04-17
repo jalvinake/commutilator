@@ -16,4 +16,15 @@ public class YearRetriever extends VehicleMenuItemsRetriever {
 
         return getMenuItemsFromAPI(yearUrl);
     }
+
+//    @Override
+//    public VehicleMenuItem GetSelectedMenuItem(ArrayList<VehicleMenuItem> vehicleMenuItems) {
+//        for(VehicleMenuItem vehicleMenuItem : vehicleMenuItems) {
+//            if(vehicleMenuItem.Text == _vehicle.getYear()) {
+//                return vehicleMenuItem;
+//            }
+//        }
+//
+//        return null;
+//    }
 }

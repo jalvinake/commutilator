@@ -18,4 +18,15 @@ public class MakeRetriever extends  VehicleMenuItemsRetriever {
 
         return getMenuItemsFromAPI(makeUrlWithYear);
     }
+
+//    @Override
+//    public VehicleMenuItem GetSelectedMenuItem(ArrayList<VehicleMenuItem> vehicleMenuItems) {
+//        for(VehicleMenuItem vehicleMenuItem : vehicleMenuItems) {
+//            if(vehicleMenuItem.Text == _vehicle.getMake()) {
+//                return vehicleMenuItem;
+//            }
+//        }
+//
+//        return null;
+//    }
 }
