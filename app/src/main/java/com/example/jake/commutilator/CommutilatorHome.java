@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jake.commutilator.Vehicles.VehicleManager;
+import com.example.jake.commutilator.Vehicles.FuelPriceData;
+import com.example.jake.commutilator.Vehicles.FuelPriceDataRetriever;
 
 
 public class CommutilatorHome extends ActionBarActivity {
@@ -16,10 +18,11 @@ public class CommutilatorHome extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commutilator_home);
-
         vehicleManager = VehicleManager.getInstance();
         vehicleManager.LoadVehicle(this);
 
+        FuelPriceDataRetriever fuelDataRtv = new FuelPriceDataRetriever();
+        FuelPriceData fuelPricedt = fuelDataRtv.getFuelPriceData();
     }
 
     @Override
