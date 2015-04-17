@@ -40,3 +40,6 @@ Thumbs.db
 .idea/tasks.xml
 .idea/datasources.xml
 .idea/dataSources.ids
+
+# google maps API key - each developer needs a unique key for their own machine
+/app/src/debug/res/values/google_maps_api.xml
