@@ -16,7 +16,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicle_year_selection"
-
         />
     <TextView
         android:text="Make:"
@@ -53,4 +52,14 @@
         android:id="@+id/vehicle_modeloption_selection"
 
         />
+
+    <TextView
+        android:text="Average MPG:"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/vehicle_mpg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

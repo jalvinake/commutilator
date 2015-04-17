@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.jake.commutilator.Vehicles.MakeRetriever;
 import com.example.jake.commutilator.Vehicles.ModelOptionRetriever;
@@ -17,6 +18,7 @@ import com.example.jake.commutilator.Vehicles.ModelRetriever;
 import com.example.jake.commutilator.Vehicles.Vehicle;
 import com.example.jake.commutilator.Vehicles.VehicleFuelData;
 import com.example.jake.commutilator.Vehicles.VehicleFuelDataRetriever;
+import com.example.jake.commutilator.Vehicles.VehicleManager;
 import com.example.jake.commutilator.Vehicles.VehicleMenuItem;
 import com.example.jake.commutilator.Vehicles.VehicleMenuItemsRetriever;
 import com.example.jake.commutilator.Vehicles.YearRetriever;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 
 
 public class VehicleConfiguration extends ActionBarActivity {
+    VehicleManager vehicleManager;
 
     Vehicle vehicle;
 
@@ -33,13 +36,22 @@ public class VehicleConfiguration extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_configuration);
 
-        vehicle = new Vehicle();
-
+        vehicleManager = VehicleManager.getInstance();
+        if(vehicleManager.getVehicleIsConfigured() == false)
+        {
+            vehicle = new Vehicle();
+            vehicleManager.setCurrentVehicle(vehicle);
+        }
+        else
+        {
+            vehicle = vehicleManager.getCurrentVehicle();
+        }
 
         final Spinner vehicleYearSpinner = (Spinner) findViewById(R.id.vehicle_year_selection);
         final Spinner vehicleMakeSpinner = (Spinner) findViewById(R.id.vehicle_make_selection);
         final Spinner vehicleModelSpinner = (Spinner) findViewById(R.id.vehicle_model_selection);
         final Spinner vehicleModelOptionSpinner = (Spinner) findViewById(R.id.vehicle_modeloption_selection);
+        final TextView mpgTextView = (TextView) findViewById(R.id.vehicle_mpg);
 
         new VehiclePropertyUpdaterTask(vehicleYearSpinner, new YearRetriever(vehicle)).execute();
 
@@ -91,7 +103,7 @@ public class VehicleConfiguration extends ActionBarActivity {
                 vehicle.setModelOption(menuItem.Text);
                 vehicle.setVehicleId(menuItem.Value);
 
-                new VehicleFuelDataUpdaterTask(vehicle).execute();
+                new VehicleFuelDataUpdaterTask(vehicle, mpgTextView).execute();
             }
 
             @Override
@@ -101,6 +113,12 @@ public class VehicleConfiguration extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        vehicleManager.SaveVehicle(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,15 +166,17 @@ public class VehicleConfiguration extends ActionBarActivity {
             ArrayAdapter<VehicleMenuItem> adapter = new ArrayAdapter<VehicleMenuItem>(getApplicationContext(),
                     R.layout.vehicle_spinner_item, vehicleMenuItems);
             vehiclePropertySpinner.setAdapter(adapter);
-        }
+    }
     }
 
     private class VehicleFuelDataUpdaterTask extends  AsyncTask<Void, Void, VehicleFuelData>{
         Vehicle vehicle;
+        TextView textView;
 
-        public VehicleFuelDataUpdaterTask(Vehicle currentVehicle)
+        public VehicleFuelDataUpdaterTask(Vehicle currentVehicle, TextView mpgTextView)
         {
             vehicle = currentVehicle;
+            textView = mpgTextView;
         }
 
         @Override
@@ -174,6 +194,7 @@ public class VehicleConfiguration extends ActionBarActivity {
         @Override
         protected void onPostExecute(VehicleFuelData vehicleFuelData) {
             vehicle.setFuelData(vehicleFuelData);
+            textView.setText(vehicleFuelData.CombinedMPG.toString());
         }
     }
 }

@@ -17,6 +17,7 @@ public abstract class VehicleMenuItemsRetriever {
     }
 
     public abstract ArrayList<VehicleMenuItem> GetMenuItems();
+    //public abstract VehicleMenuItem GetSelectedMenuItem(ArrayList<VehicleMenuItem> vehicleMenuItems);
 
     protected ArrayList<VehicleMenuItem> getMenuItemsFromAPI(String url)
     {
