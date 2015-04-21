@@ -21,8 +21,8 @@ public class CommutilatorHome extends ActionBarActivity {
         vehicleManager = VehicleManager.getInstance();
         vehicleManager.LoadVehicle(this);
 
-        FuelPriceDataRetriever fuelDataRtv = new FuelPriceDataRetriever();
-        FuelPriceData fuelPricedt = fuelDataRtv.getFuelPriceData();
+        //FuelPriceDataRetriever fuelDataRtv = new FuelPriceDataRetriever();
+        //FuelPriceData fuelPricedt = fuelDataRtv.getFuelPriceData();
     }
 
     @Override
@@ -30,7 +30,6 @@ public class CommutilatorHome extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_commutilator_home, menu);
         return true;
-
     }
 
     @Override

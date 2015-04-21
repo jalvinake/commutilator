@@ -40,5 +40,5 @@ Thumbs.db
 
 # IntelliJ/ Android Studio stuff
 /.idea/
-#*.iml
+*.iml
 
