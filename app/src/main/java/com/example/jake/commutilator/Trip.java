@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Trip {
 
@@ -36,6 +37,16 @@ public class Trip {
     private Double distance;
     private Double amountSaved;
     private Double gallonsSaved;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    private UUID id;
 
     public Double getDistance() {
         return distance;
