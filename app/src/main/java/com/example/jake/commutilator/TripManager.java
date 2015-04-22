@@ -1,5 +1,8 @@
 package com.example.jake.commutilator;
 
+import android.content.Context;
+import android.location.LocationManager;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ public class TripManager {
         populateTestTrips();
     }
 
+    LocationManager locationManager;
+    TripLocationListener tripLocationListener;
+
     public Trip getCurrentTrip() {
         return currentTrip;
     }
@@ -33,7 +39,7 @@ public class TripManager {
         return tripIsActive;
     }
 
-    private Boolean tripIsActive;
+    private Boolean tripIsActive = false;
 
     public ArrayList<Trip> getTripHistory() {
         return new ArrayList<Trip>(tripHistory.values());
@@ -59,6 +65,17 @@ public class TripManager {
         currentTrip = new Trip();
         currentTrip.setId(UUID.randomUUID());
         currentTrip.StartTrip();
+
+      startLocationUpdates();
+    }
+
+    private void startLocationUpdates() {
+        tripLocationListener = new TripLocationListener(getCurrentTrip());
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 20, tripLocationListener);
+    }
+
+    private void stopLocationUpdates() {
+        locationManager.removeUpdates(tripLocationListener);
     }
 
     public void EndTrip(){
@@ -68,7 +85,9 @@ public class TripManager {
         currentTrip = null;
     }
 
-
+    public void LoadTrips(Context context){
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    }
 
     private void populateTestTrips() {
         tripHistory = new HashMap<UUID, Trip>();

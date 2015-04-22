@@ -29,6 +29,8 @@ public class Trip {
 
     public void EndTrip(){
         setEndTime(new Date());
+        calculateAmountSaved();
+        calcuateDistanceTraveled();
     }
 
     private Date startTime;
@@ -53,8 +55,8 @@ public class Trip {
     }
 
     // TODO: modify to calculate distance from route
-    public void setDistance(Double distance) {
-        this.distance = distance;
+    public void calcuateDistanceTraveled() {
+        this.distance = 10.0;
     }
 
     public Double getAmountSaved() {
@@ -62,8 +64,8 @@ public class Trip {
     }
 
     // TODO: modify to calculate amount saved?  Or is this better done elsewhere?
-    public void setAmountSaved(Double amountSaved) {
-        this.amountSaved = amountSaved;
+    public void calculateAmountSaved() {
+        this.amountSaved = 15.0;
     }
 
     public Date getStartTime() {
