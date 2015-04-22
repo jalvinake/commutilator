@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -22,8 +23,11 @@ public class TripHistory extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_history);
 
-        // Load test trips
         setListAdapter(new TripAdapter(this, R.layout.trip_item, Trip.getAll()));
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
 
     }
 
