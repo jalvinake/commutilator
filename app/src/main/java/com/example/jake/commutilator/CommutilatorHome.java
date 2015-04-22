@@ -1,8 +1,10 @@
 package com.example.jake.commutilator;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.jake.commutilator.Vehicles.Vehicle;
 import com.example.jake.commutilator.Vehicles.VehicleManager;
 import com.example.jake.commutilator.Vehicles.FuelPriceData;
 import com.example.jake.commutilator.Vehicles.FuelPriceDataRetriever;
@@ -47,6 +50,9 @@ public class CommutilatorHome extends ActionBarActivity {
                 }
             }
         });
+        final TextView currentFuelPrice = (TextView) findViewById(R.id.current_fuel_price);
+
+        new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPrice).execute();
     }
 
     @Override
@@ -78,5 +84,34 @@ public class CommutilatorHome extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private class FuelPriceDataUpdaterTask extends AsyncTask<Void,Void,FuelPriceData> {
+        private TextView textView;
+        private Vehicle vehicle;
+
+        public FuelPriceDataUpdaterTask(Vehicle currentVehicle, TextView myTextbox) {
+            textView = myTextbox;
+            vehicle = currentVehicle;
+        }
+
+        @Override
+        protected FuelPriceData doInBackground(Void... params) {
+            try {
+                FuelPriceDataRetriever retriever = new FuelPriceDataRetriever();
+                //TODO: make decision on the price to return based on the vehicle
+                return retriever.getFuelPriceData();
+            } catch (Exception e) {
+                Log.e("FuelPriceData", e.getMessage(), e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(FuelPriceData fuelPriceData) {
+            super.onPostExecute(fuelPriceData);
+            textView.setText(fuelPriceData.regular.toString());
+        }
     }
 }
