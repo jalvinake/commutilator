@@ -13,17 +13,22 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 public class TripHistory extends ListActivity {
+    TripManager tripManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_history);
 
+        tripManager = TripManager.getInstance();
+
         // Load test trips
-        setListAdapter(new TripAdapter(this, R.layout.trip_item, Trip.getAll()));
+
+        setListAdapter(new TripAdapter(this, R.layout.trip_item, tripManager.getTripHistory()));
 
     }
 
@@ -54,6 +59,10 @@ public class TripHistory extends ListActivity {
     class TripAdapter extends ArrayAdapter<Trip> {
 
         public TripAdapter(Context context, int resource, Trip[] objects) {
+            super(context, resource, objects);
+        }
+
+        TripAdapter(Context context, int resource, List<Trip> objects) {
             super(context, resource, objects);
         }
 

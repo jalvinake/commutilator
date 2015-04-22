@@ -10,30 +10,6 @@ import java.util.List;
 
 public class Trip {
 
-
-
-    public static Trip[] getAll() {
-        List<LatLng> testRoutePoints = new ArrayList<LatLng>();
-        testRoutePoints.add(new LatLng(37.35, -122.0));
-        testRoutePoints.add(new LatLng(37.45, -122.0));
-        testRoutePoints.add(new LatLng(37.45, -122.1));
-        testRoutePoints.add(new LatLng(37.35, -122.1));
-        testRoutePoints.add(new LatLng(37.35, -122.2));
-
-        List<LatLng> testRoutePoints2 = new ArrayList<LatLng>();
-        testRoutePoints2.add(new LatLng(37.35, -122.0));
-        testRoutePoints2.add(new LatLng(37.45, -122.0));
-        testRoutePoints2.add(new LatLng(37.45, -122.1));
-        testRoutePoints2.add(new LatLng(37.35, -122.1));
-        testRoutePoints2.add(new LatLng(37.35, -122.2));
-
-        return new Trip[]{
-                new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), testRoutePoints, 3.27234, 1.4, 0.23),
-                new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), testRoutePoints2, 30.34342, 3.45, 1.5),
-        };
-
-    }
-
     public Trip(Date startTime, Date endTime, List<LatLng> routePoints, Double distance, Double amountSaved, Double gallonsSaved){
         this.startTime = startTime;
         this.endTime = endTime;
@@ -41,6 +17,17 @@ public class Trip {
         this.distance = distance;
         this.amountSaved = amountSaved;
         this.gallonsSaved = gallonsSaved;
+    }
+
+    public Trip(){
+    }
+
+    public void StartTrip(){
+        setStartTime(new Date());
+    }
+
+    public void EndTrip(){
+        setEndTime(new Date());
     }
 
     private Date startTime;
