@@ -23,6 +23,7 @@ public class CommutilatorHome extends ActionBarActivity {
 
         //FuelPriceDataRetriever fuelDataRtv = new FuelPriceDataRetriever();
         //FuelPriceData fuelPricedt = fuelDataRtv.getFuelPriceData();
+
     }
 
     @Override
@@ -47,6 +48,10 @@ public class CommutilatorHome extends ActionBarActivity {
         if (id == R.id.action_route_map) {
             Intent routeMapIntent = new Intent(CommutilatorHome.this, RouteMap.class);
             startActivity(routeMapIntent);
+        }
+        if (id == R.id.action_trip_history) {
+            Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
+            startActivity(tripHistoryIntent);
         }
 
         return super.onOptionsItemSelected(item);
