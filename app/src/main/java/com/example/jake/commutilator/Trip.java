@@ -28,18 +28,19 @@ public class Trip {
         testRoutePoints2.add(new LatLng(37.35, -122.2));
 
         return new Trip[]{
-                new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), testRoutePoints, 3.27234, 1.4),
-                new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), testRoutePoints2, 30.34342, 3.45),
+                new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), testRoutePoints, 3.27234, 1.4, 0.23),
+                new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), testRoutePoints2, 30.34342, 3.45, 1.5),
         };
 
     }
 
-    public Trip(Date startTime, Date endTime, List<LatLng> routePoints, Double distance, Double amountSaved){
+    public Trip(Date startTime, Date endTime, List<LatLng> routePoints, Double distance, Double amountSaved, Double gallonsSaved){
         this.startTime = startTime;
         this.endTime = endTime;
         this.routePoints = routePoints;
         this.distance = distance;
         this.amountSaved = amountSaved;
+        this.gallonsSaved = gallonsSaved;
     }
 
     private Date startTime;
@@ -47,6 +48,7 @@ public class Trip {
     private List<LatLng> routePoints;
     private Double distance;
     private Double amountSaved;
+    private Double gallonsSaved;
 
     public Double getDistance() {
         return distance;
@@ -82,9 +84,7 @@ public class Trip {
         this.endTime = endTime;
     }
 
-    public List<LatLng> getRoutePoints() {
-        return routePoints;
-    }
+    public List<LatLng> getRoutePoints() { return routePoints; }
 
     public void addRoutePoint(LatLng point){
         routePoints.add(point);
@@ -92,5 +92,11 @@ public class Trip {
 
     public void setRoutePoints(List<LatLng> routePoints) {
         this.routePoints = routePoints;
+    }
+
+    public Double getGallonsSaved() { return gallonsSaved; }
+
+    public void setGallonsSaved(Double gallonsSaved) {
+        this.gallonsSaved = gallonsSaved;
     }
 }
