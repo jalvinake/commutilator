@@ -28,8 +28,8 @@ public class Trip {
         testRoutePoints2.add(new LatLng(37.35, -122.2));
 
         return new Trip[]{
-                new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), testRoutePoints, 3.27234, 1.4),
-                new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), testRoutePoints2, 30.34342, 3.45),
+                new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), testRoutePoints, 3.27234, 1.4, 0.23),
+                new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), testRoutePoints2, 30.34342, 3.45, 1.5),
         };
 
     }
