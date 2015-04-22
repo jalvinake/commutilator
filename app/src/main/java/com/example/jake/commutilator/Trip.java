@@ -86,6 +86,10 @@ public class Trip {
         return routePoints;
     }
 
+    public void addRoutePoint(LatLng point){
+        routePoints.add(point);
+    }
+
     public void setRoutePoints(List<LatLng> routePoints) {
         this.routePoints = routePoints;
     }

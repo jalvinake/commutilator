@@ -36,7 +36,7 @@ proguard/
 Thumbs.db
 
 # google maps API key - each developer needs a unique key for their own machine
-#/app/src/debug/res/values/google_maps_api.xml
+/app/src/debug/res/values/google_maps_api.xml
 
 # IntelliJ/ Android Studio stuff
 /.idea/
