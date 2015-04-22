@@ -34,12 +34,13 @@ public class Trip {
 
     }
 
-    public Trip(Date startTime, Date endTime, List<LatLng> routePoints, Double distance, Double amountSaved){
+    public Trip(Date startTime, Date endTime, List<LatLng> routePoints, Double distance, Double amountSaved, Double gallonsSaved){
         this.startTime = startTime;
         this.endTime = endTime;
         this.routePoints = routePoints;
         this.distance = distance;
         this.amountSaved = amountSaved;
+        this.gallonsSaved = gallonsSaved;
     }
 
     private Date startTime;
@@ -47,6 +48,7 @@ public class Trip {
     private List<LatLng> routePoints;
     private Double distance;
     private Double amountSaved;
+    private Double gallonsSaved;
 
     public Double getDistance() {
         return distance;
@@ -82,11 +84,15 @@ public class Trip {
         this.endTime = endTime;
     }
 
-    public List<LatLng> getRoutePoints() {
-        return routePoints;
-    }
+    public List<LatLng> getRoutePoints() { return routePoints; }
 
     public void setRoutePoints(List<LatLng> routePoints) {
         this.routePoints = routePoints;
+    }
+
+    public Double getGallonsSaved() { return gallonsSaved; }
+
+    public void setGallonsSaved(Double gallonsSaved) {
+        this.gallonsSaved = gallonsSaved;
     }
 }
