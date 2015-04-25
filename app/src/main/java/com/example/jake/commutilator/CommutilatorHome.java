@@ -35,8 +35,23 @@ public class CommutilatorHome extends ActionBarActivity {
 
         final TextView currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
 
-        if (vehicleManager.getVehicleIsConfigured() == true) {
+        final Button configVehicle = (Button) findViewById(R.id.configure_vehicle_button);
+        configVehicle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
+                startActivity(vehicleConfigurationIntent);
+            }
+
+
+        });
+
+        if(vehicleManager.getVehicleIsConfigured() == true) {
             new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
+            configVehicle.setText(vehicleManager.getCurrentVehicle().getVehicleId());
+        }
+        else {
+            configVehicle.setText("Configure Vehicle");
         }
 
         final Button startStopButton = (Button) findViewById(R.id.start_stop_button);
@@ -52,6 +67,8 @@ public class CommutilatorHome extends ActionBarActivity {
                 }
             }
         });
+
+
 
     }
 
