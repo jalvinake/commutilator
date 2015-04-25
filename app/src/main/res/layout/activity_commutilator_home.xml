@@ -22,6 +22,3 @@
         android:id="@+id/start_stop_button"/>
 
 </LinearLayout>
-
-
-</RelativeLayout>
