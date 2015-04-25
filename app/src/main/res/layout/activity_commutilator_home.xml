@@ -22,4 +22,10 @@
         android:text="START"
         android:id="@+id/start_stop_button"/>
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Configure Vehicle"
+        android:id="@+id/configure_vehicle_button"/>
+
 </LinearLayout>
