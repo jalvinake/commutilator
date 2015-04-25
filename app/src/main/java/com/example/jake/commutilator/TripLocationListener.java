@@ -11,17 +11,17 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class TripLocationListener implements LocationListener {
 
-    private Trip myTrip;
+    private TripManager myTripManager;
 
-    public TripLocationListener(Trip trip) {
-        myTrip = trip;
+    public TripLocationListener(TripManager tripManager) {
+        myTripManager = tripManager;
     }
 
     @Override
     public void onLocationChanged(Location location) {
         LatLng point = new LatLng(location.getLatitude(), location.getLongitude());
 
-        myTrip.addRoutePoint(point);
+        myTripManager.AddNewPoint(point);
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.simpleframework.xml.Root;
  * Created by etjric on 4/17/15.
  */
 @Root(name = "fuelPrices", strict=false)
-    public class FuelPriceData {
+public class FuelPriceData {
     @Element(name = "cng")
     public Double cng;
 
