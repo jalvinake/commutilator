@@ -155,17 +155,24 @@ public class TripManager {
         Trip trip1 = new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), 3.12, 18.3);
         Trip trip2 = new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), 2.56, 22.1);
 
-        trip1.addRoutePoint(new LatLng(37.35, -122.0));
-        trip1.addRoutePoint(new LatLng(37.45, -122.0));
-        trip1.addRoutePoint(new LatLng(37.45, -122.1));
-        trip1.addRoutePoint(new LatLng(37.35, -122.1));
-        trip1.addRoutePoint(new LatLng(37.35, -122.2));
+        trip1.addRoutePoint(new LatLng(44.974144, -93.232254));
+        trip1.addRoutePoint(new LatLng(44.973593, -93.232157));
+        trip1.addRoutePoint(new LatLng(44.973552, -93.223907));
+        trip1.addRoutePoint(new LatLng(44.967267, -93.222528));
+        trip1.addRoutePoint(new LatLng(44.956757, -93.192460));
+        trip1.addRoutePoint(new LatLng(44.953279, -93.192439));
+        trip1.addRoutePoint(new LatLng(44.952976, -93.19117));
 
-        trip2.addRoutePoint(new LatLng(37.35, -122.0));
-        trip2.addRoutePoint(new LatLng(37.45, -122.0));
-        trip2.addRoutePoint(new LatLng(37.75, -122.1));
-        trip2.addRoutePoint(new LatLng(37.85, -122.1));
-        trip2.addRoutePoint(new LatLng(38.85, -122.2));
+        trip2.addRoutePoint(new LatLng(44.974144, -93.232254));
+        trip2.addRoutePoint(new LatLng(44.973593, -93.232157));
+        trip2.addRoutePoint(new LatLng(44.973552, -93.223907));
+        trip2.addRoutePoint(new LatLng(44.967267, -93.222528));
+        trip2.addRoutePoint(new LatLng(44.965077, -93.287754));
+        trip2.addRoutePoint(new LatLng(44.975157, -93.288011));
+        trip2.addRoutePoint(new LatLng(44.970603, -93.340969));
+        trip2.addRoutePoint(new LatLng(44.963832, -93.343930));
+        trip2.addRoutePoint(new LatLng(44.963802, -93.360968));
+        trip2.addRoutePoint(new LatLng(44.966140, -93.362169));
 
         trip1.setId(UUID.randomUUID());
         trip2.setId(UUID.randomUUID());

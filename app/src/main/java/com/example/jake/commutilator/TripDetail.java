@@ -1,8 +1,8 @@
 package com.example.jake.commutilator;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,14 +10,23 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.UUID;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.PolylineOptions;
 
-public class TripDetail extends Activity {
+
+public class TripDetail extends FragmentActivity {
     public final static String CURRENT_TRIP_ID = "TripDetail.CurrentTripId";
     private TripManager tripManager;
     private Trip trip;
     private UUID tripId;
+    private GoogleMap mMap;
 
     TextView startTime;
     TextView distance;
@@ -33,6 +42,36 @@ public class TripDetail extends Activity {
         tripId = UUID.fromString(intent.getStringExtra(CURRENT_TRIP_ID));
         setContentView(R.layout.activity_trip_detail);
         populateTripDetails(tripId);
+        setupMap(tripId);
+
+    }
+
+    private void setupMap(UUID tripID) {
+        if (mMap == null) {
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.route_map)).getMap();
+        }
+
+        if (mMap != null) {
+            trip = tripManager.getTrip(tripId);
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions
+                    .addAll(trip.getRoutePoints())
+                    .width(10)
+                    .color(Color.BLUE)
+                    .geodesic(true);
+            mMap.addPolyline(polylineOptions);
+            zoomToTrip(trip.getRoutePoints());
+        }
+    }
+
+    private void zoomToTrip(List<LatLng> routePoints) {
+        LatLngBounds.Builder bc = new LatLngBounds.Builder();
+
+        for (LatLng pnt : routePoints) {
+            bc.include(pnt);
+        }
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bc.build(),360,360,50));
     }
 
     public void populateTripDetails(UUID tripId) {
@@ -49,7 +88,6 @@ public class TripDetail extends Activity {
         Double duration = (trip.getEndTime().getTime() - trip.getStartTime().getTime()) / 60000.;
         durationText.setText(new DecimalFormat("0.00 minutes").format(duration));
         gallonsSaved.setText(new DecimalFormat("0.0 gallons").format(trip.getGallonsSaved()));
-
     }
 
     @Override
