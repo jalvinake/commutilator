@@ -21,6 +21,7 @@ import com.example.jake.commutilator.Vehicles.FuelPriceDataRetriever;
 public class CommutilatorHome extends ActionBarActivity {
     VehicleManager vehicleManager;
     TripManager tripManager;
+    Double currentFuelPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,9 @@ public class CommutilatorHome extends ActionBarActivity {
         tripManager = TripManager.getInstance();
         tripManager.LoadTrips(getApplicationContext());
 
-        //FuelPriceDataRetriever fuelDataRtv = new FuelPriceDataRetriever();
-        //FuelPriceData fuelPricedt = fuelDataRtv.getFuelPriceData();
+        final TextView currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
+
+        new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
 
         final Button startStopButton = (Button) findViewById(R.id.start_stop_button);
         startStopButton.setOnClickListener(new View.OnClickListener() {
@@ -45,14 +47,12 @@ public class CommutilatorHome extends ActionBarActivity {
                 }
                 else
                 {
-                    tripManager.StartTrip();
+                    tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
                     ((Button)v).setText("STOP");
                 }
             }
         });
-        final TextView currentFuelPrice = (TextView) findViewById(R.id.current_fuel_price);
 
-        new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPrice).execute();
     }
 
     @Override

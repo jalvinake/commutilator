@@ -1,5 +1,7 @@
 package com.example.jake.commutilator;
 
+import android.location.Location;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -11,13 +13,12 @@ import java.util.UUID;
 
 public class Trip {
 
-    public Trip(Date startTime, Date endTime, List<LatLng> routePoints, Double distance, Double amountSaved, Double gallonsSaved){
+    public Trip(Date startTime, Date endTime, Double gasPriceInDollars, Double milesPerGallon){
         this.startTime = startTime;
         this.endTime = endTime;
-        this.routePoints = routePoints;
-        this.distance = distance;
-        this.amountSaved = amountSaved;
-        this.gallonsSaved = gallonsSaved;
+
+        this.gasPriceInDollars = gasPriceInDollars;
+        this.milesPerGallon = milesPerGallon;
     }
 
     public Trip(){
@@ -29,16 +30,44 @@ public class Trip {
 
     public void EndTrip(){
         setEndTime(new Date());
-        calculateAmountSaved();
-        calcuateDistanceTraveled();
     }
 
     private Date startTime;
     private Date endTime;
-    private List<LatLng> routePoints;
-    private Double distance;
-    private Double amountSaved;
-    private Double gallonsSaved;
+    private List<LatLng> routePoints = new ArrayList<LatLng>();
+    private Double distance = 0.0;
+    private Double amountSaved = 0.0;
+    private Double gallonsSaved = 0.0;
+    private Double gasPriceInDollars;
+    private Double milesPerGallon;
+    private String vehicleId;
+    private UUID id;
+
+    public Double getGasPriceInDollars() {
+        return gasPriceInDollars;
+    }
+
+    public void setGasPriceInDollars(Double gasPriceInDollars) {
+        this.gasPriceInDollars = gasPriceInDollars;
+    }
+
+    public Double getMilesPerGallon() {
+        return milesPerGallon;
+    }
+
+    public void setMilesPerGallon(Double milesPerGallon) {
+        this.milesPerGallon = milesPerGallon;
+    }
+
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
 
     public UUID getId() {
         return id;
@@ -48,24 +77,20 @@ public class Trip {
         this.id = id;
     }
 
-    private UUID id;
-
     public Double getDistance() {
         return distance;
     }
 
-    // TODO: modify to calculate distance from route
-    public void calcuateDistanceTraveled() {
-        this.distance = 10.0;
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
     public Double getAmountSaved() {
         return amountSaved;
     }
 
-    // TODO: modify to calculate amount saved?  Or is this better done elsewhere?
-    public void calculateAmountSaved() {
-        this.amountSaved = 15.0;
+    public void setAmountSaved(Double amountSaved) {
+        this.amountSaved = amountSaved;
     }
 
     public Date getStartTime() {
@@ -87,7 +112,39 @@ public class Trip {
     public List<LatLng> getRoutePoints() { return routePoints; }
 
     public void addRoutePoint(LatLng point){
+        updateDistanceWithNewPoint(point);
         routePoints.add(point);
+
+        if(distance > 0.0) {
+            setGallonsSaved(calculateGallonsSaved(getDistance()));
+            setAmountSaved(getGallonsSaved());
+        }
+    }
+
+    private void updateDistanceWithNewPoint(LatLng newPoint)
+    {
+        //this method assumes that it is called BEFORE the point added to the local collection
+
+        //get the previous point first if there is one
+        int numberOfPoints = routePoints.size();
+        if(numberOfPoints > 0) {
+            LatLng previous = routePoints.get(numberOfPoints - 1);
+            float[] results = new float[3];
+            Location.distanceBetween(newPoint.latitude, newPoint.longitude, previous.latitude, previous.longitude, results );
+
+            //add distance between new point and previous point to the total distance
+            //distance is in first location
+            //convert to miles by multiplying by 0.000621371
+            setDistance(getDistance() + results[0] * 0.000621371);
+        }
+    }
+
+    private Double calculateGallonsSaved(Double distance){
+        return distance / getMilesPerGallon();
+    }
+
+    private Double calculateAmountSaved(Double gallonsSaved){
+        return gallonsSaved * getGasPriceInDollars() ;
     }
 
     public void setRoutePoints(List<LatLng> routePoints) {
