@@ -22,7 +22,7 @@ public class TripDetail extends Activity {
     TextView startTime;
     TextView distance;
     TextView amountSaved;
-    TextView duration;
+    TextView durationText;
     TextView gallonsSaved;
 
     @Override
@@ -40,13 +40,14 @@ public class TripDetail extends Activity {
         startTime = (TextView) findViewById(R.id.start_time_text);
         distance = (TextView) findViewById(R.id.distance_text);
         amountSaved = (TextView) findViewById(R.id.amount_saved_text);
-        duration = (TextView) findViewById(R.id.duration_text);
+        durationText = (TextView) findViewById(R.id.duration_text);
         gallonsSaved = (TextView) findViewById(R.id.gallons_saved_text);
 
         startTime.setText(new SimpleDateFormat("EEE MMM dd hh:mm a").format(trip.getStartTime()));
         distance.setText(new DecimalFormat("0.00 miles").format(trip.getDistance()));
         amountSaved.setText(new DecimalFormat("$0.00").format(trip.getAmountSaved()));
-        //duration.setText(trip.getDuration);
+        Double duration = (trip.getEndTime().getTime() - trip.getStartTime().getTime()) / 60000.;
+        durationText.setText(new DecimalFormat("0.00 minutes").format(duration));
         gallonsSaved.setText(new DecimalFormat("0.0 gallons").format(trip.getGallonsSaved()));
 
     }

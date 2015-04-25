@@ -63,4 +63,11 @@
         android:layout_below="@id/amount_saved_label"
         android:layout_toRightOf="@id/gallons_saved_label"/>
 
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/gallons_saved_label"
+        android:id="@+id/activity_route_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 </RelativeLayout>

@@ -35,7 +35,7 @@ public class CommutilatorHome extends ActionBarActivity {
 
         final TextView currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
 
-        if(vehicleManager.getVehicleIsConfigured() == true) {
+        if (vehicleManager.getVehicleIsConfigured() == true) {
             new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
         }
 
@@ -43,14 +43,12 @@ public class CommutilatorHome extends ActionBarActivity {
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tripManager.getTripIsActive() == true) {
+                if (tripManager.getTripIsActive() == true) {
                     tripManager.EndTrip();
-                    ((Button)v).setText("START");
-                }
-                else
-                {
+                    ((Button) v).setText("START");
+                } else {
                     tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
-                    ((Button)v).setText("STOP");
+                    ((Button) v).setText("STOP");
                 }
             }
         });
@@ -73,7 +71,7 @@ public class CommutilatorHome extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_vehicle_configuration) {
-            Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
+            Intent vehicleConfigurationIntent = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
             startActivity(vehicleConfigurationIntent);
         }
         if (id == R.id.action_route_map) {
@@ -89,7 +87,7 @@ public class CommutilatorHome extends ActionBarActivity {
     }
 
 
-    private class FuelPriceDataUpdaterTask extends AsyncTask<Void,Void,FuelPriceData> {
+    private class FuelPriceDataUpdaterTask extends AsyncTask<Void, Void, FuelPriceData> {
         private TextView textView;
         private Vehicle vehicle;
 
@@ -112,8 +110,9 @@ public class CommutilatorHome extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(FuelPriceData fuelPriceData) {
-            super.onPostExecute(fuelPriceData);
-            textView.setText(fuelPriceData.regular.toString());
+            if (fuelPriceData != null) {
+                textView.setText(fuelPriceData.regular.toString());
+            }
         }
     }
 }
