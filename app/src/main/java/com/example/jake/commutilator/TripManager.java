@@ -81,6 +81,10 @@ public class TripManager {
     Double totalMoneySavedForCompletedTrips = 0.0;
 
     private void calculateTripMetricsForTripHistory() {
+        totalDistanceTravelledForCompletedTrips = 0.0;
+        totalGallonsSavedForCompletedTrips = 0.0;
+        totalMoneySavedForCompletedTrips = 0.0;
+
         for(Trip trip : getTripHistory()) {
             updateTripMetricsWithNewTrip(trip);
         }
@@ -99,7 +103,7 @@ public class TripManager {
     private void updateTripMetricsForActiveTrip(Trip trip){
         totalMoneySaved = totalMoneySavedForCompletedTrips + trip.getAmountSaved();
         totalDistanceTravelled = totalDistanceTravelledForCompletedTrips + trip.getDistance();
-        totalGallonsSaved = totalGallonsSavedForCompletedTrips + getTotalGallonsSaved();
+        totalGallonsSaved = totalGallonsSavedForCompletedTrips + trip.getGallonsSaved();
     }
 
     public Trip getTrip(UUID id) {
@@ -108,7 +112,6 @@ public class TripManager {
                 return currentTrip;
             }
         }
-
 
         if (tripHistory.containsKey(id)) {
             return tripHistory.get(id);
@@ -144,7 +147,7 @@ public class TripManager {
 
     private void startLocationUpdates() {
         tripLocationListener = new TripLocationListener(this);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, tripLocationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, tripLocationListener);
     }
 
     private void stopLocationUpdates() {
@@ -153,6 +156,7 @@ public class TripManager {
 
     public void EndTrip(){
         tripIsActive = false;
+        stopLocationUpdates();
         currentTrip.EndTrip();
         updateTripMetricsWithNewTrip(currentTrip);
         tripHistory.put(currentTrip.getId(), currentTrip);
