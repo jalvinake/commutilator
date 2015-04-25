@@ -52,15 +52,20 @@ public class TripDetail extends FragmentActivity {
         }
 
         if (mMap != null) {
+
             trip = tripManager.getTrip(tripId);
-            PolylineOptions polylineOptions = new PolylineOptions();
-            polylineOptions
-                    .addAll(trip.getRoutePoints())
-                    .width(10)
-                    .color(Color.BLUE)
-                    .geodesic(true);
-            mMap.addPolyline(polylineOptions);
-            zoomToTrip(trip.getRoutePoints());
+            List<LatLng> routePoints = trip.getRoutePoints();
+
+            if (routePoints.size() > 0) {
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions
+                        .addAll(routePoints)
+                        .width(10)
+                        .color(Color.BLUE)
+                        .geodesic(true);
+                mMap.addPolyline(polylineOptions);
+                zoomToTrip(routePoints);
+            }
         }
     }
 

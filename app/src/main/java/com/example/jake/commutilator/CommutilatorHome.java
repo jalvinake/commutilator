@@ -125,7 +125,6 @@ public class CommutilatorHome extends ActionBarActivity {
         }
     }
 
-
     private class FuelPriceDataUpdaterTask extends AsyncTask<Void, Void, FuelPriceData> {
         private TextView textView;
         private Vehicle vehicle;
@@ -150,7 +149,7 @@ public class CommutilatorHome extends ActionBarActivity {
         @Override
         protected void onPostExecute(FuelPriceData fuelPriceData) {
             if (fuelPriceData != null) {
-            currentFuelPrice = fuelPriceData.regular;
+                currentFuelPrice = fuelPriceData.regular;
                 textView.setText(fuelPriceData.regular.toString());
             }
         }
