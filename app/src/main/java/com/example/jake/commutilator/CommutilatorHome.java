@@ -35,7 +35,9 @@ public class CommutilatorHome extends ActionBarActivity {
 
         final TextView currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
 
-        new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
+        if(vehicleManager.getVehicleIsConfigured() == true) {
+            new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
+        }
 
         final Button startStopButton = (Button) findViewById(R.id.start_stop_button);
         startStopButton.setOnClickListener(new View.OnClickListener() {
