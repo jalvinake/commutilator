@@ -42,9 +42,12 @@ public class TripManager {
     Map<UUID, Trip> tripHistory;
 
     public Trip getTrip(UUID id) {
-        if(currentTrip.getId().equals(id)){
-            return currentTrip;
+        if (currentTrip != null) {
+            if(currentTrip.getId().equals(id)){
+                return currentTrip;
+            }
         }
+
 
         if (tripHistory.containsKey(id)) {
             return tripHistory.get(id);

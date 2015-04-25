@@ -2,6 +2,7 @@ package com.example.jake.commutilator;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,6 +31,10 @@ public class TripHistory extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        Trip trip = (Trip)getListAdapter().getItem(position);
+        Intent intent = new Intent(this, TripDetail.class);
+        intent.putExtra(TripDetail.CURRENT_TRIP_ID, trip.getId().toString());
+        startActivity(intent);
     }
 
     @Override
