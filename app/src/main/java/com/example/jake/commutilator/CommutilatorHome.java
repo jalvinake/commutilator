@@ -68,9 +68,6 @@ public class CommutilatorHome extends ActionBarActivity {
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -92,10 +89,7 @@ public class CommutilatorHome extends ActionBarActivity {
             Intent vehicleConfigurationIntent = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
             startActivity(vehicleConfigurationIntent);
         }
-        if (id == R.id.action_route_map) {
-            Intent routeMapIntent = new Intent(CommutilatorHome.this, RouteMap.class);
-            startActivity(routeMapIntent);
-        }
+
         if (id == R.id.action_trip_history) {
             Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
             startActivity(tripHistoryIntent);

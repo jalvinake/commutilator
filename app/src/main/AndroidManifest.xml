@@ -39,10 +39,6 @@
             android:label="@string/title_activity_vehicle_configuration" >
         </activity>
         <activity
-            android:name=".RouteMap"
-            android:label="@string/title_activity_route_map" >
-        </activity>
-        <activity
             android:name=".TripHistory"
             android:label="@string/title_activity_trip_history" >
         </activity>
