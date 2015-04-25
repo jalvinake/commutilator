@@ -16,12 +16,16 @@ import com.example.jake.commutilator.Vehicles.Vehicle;
 import com.example.jake.commutilator.Vehicles.VehicleManager;
 import com.example.jake.commutilator.Vehicles.FuelPriceData;
 import com.example.jake.commutilator.Vehicles.FuelPriceDataRetriever;
+import com.google.android.gms.maps.model.LatLng;
 
 
 public class CommutilatorHome extends ActionBarActivity {
     VehicleManager vehicleManager;
     TripManager tripManager;
-    Double currentFuelPrice;
+    double currentFuelPrice;
+    TextView totalDistanceTravelledTextView;
+    TextView totalGallonsSavedTextView;
+    TextView totalMoneySavedTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,14 @@ public class CommutilatorHome extends ActionBarActivity {
         tripManager.LoadTrips(getApplicationContext());
 
         final TextView currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
+        totalDistanceTravelledTextView = (TextView) findViewById(R.id.total_distance_travelled);
+        totalGallonsSavedTextView = (TextView) findViewById(R.id.total_gallons_saved);
+        totalMoneySavedTextView = (TextView) findViewById(R.id.total_money_saved);
+
+        setTripMetricTextViews(tripManager.getTotalMoneySaved(), tripManager.getTotalDistanceTravelled(), tripManager.getTotalGallonsSaved());
+
+        TripMetricsTextViewUpdater tripMetricsUpdater = new TripMetricsTextViewUpdater();
+        tripManager.AddTripUpdateObserver(tripMetricsUpdater);
 
         final Button configVehicle = (Button) findViewById(R.id.configure_vehicle_button);
         configVehicle.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +75,7 @@ public class CommutilatorHome extends ActionBarActivity {
                     tripManager.EndTrip();
                     ((Button) v).setText("START");
                 } else {
+
                     tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
                     ((Button) v).setText("STOP");
                 }
@@ -71,6 +84,12 @@ public class CommutilatorHome extends ActionBarActivity {
 
 
 
+    }
+
+    private void setTripMetricTextViews(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved){
+        totalDistanceTravelledTextView.setText(totalDistanceTravelled.toString() + " miles");
+        totalMoneySavedTextView.setText("$" + totalMoneySaved.toString());
+        totalGallonsSavedTextView.setText(totalGallonsSaved + " gal");
     }
 
     @Override
@@ -104,6 +123,14 @@ public class CommutilatorHome extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class TripMetricsTextViewUpdater implements TripUpdateObserver{
+
+        @Override
+        public void HandleNewPointAdded(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved, LatLng newPoint, Trip updatedTrip) {
+            setTripMetricTextViews(totalMoneySaved, totalDistanceTravelled, totalGallonsSaved);
+        }
+    }
+
 
     private class FuelPriceDataUpdaterTask extends AsyncTask<Void, Void, FuelPriceData> {
         private TextView textView;
@@ -129,6 +156,7 @@ public class CommutilatorHome extends ActionBarActivity {
         @Override
         protected void onPostExecute(FuelPriceData fuelPriceData) {
             if (fuelPriceData != null) {
+            currentFuelPrice = fuelPriceData.regular;
                 textView.setText(fuelPriceData.regular.toString());
             }
         }

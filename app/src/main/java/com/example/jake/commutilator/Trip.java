@@ -117,7 +117,7 @@ public class Trip {
 
         if(distance > 0.0) {
             setGallonsSaved(calculateGallonsSaved(getDistance()));
-            setAmountSaved(getGallonsSaved());
+            setAmountSaved(calculateAmountSaved(getGallonsSaved()));
         }
     }
 

@@ -10,6 +10,10 @@
     tools:context=".CommutilatorHome">
 
     <TextView
+        android:text="Fuel price:"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <TextView
         android:id="@+id/current_fuel_price"
         android:text="Current reg fuel price:"
         android:layout_width="fill_parent"
@@ -28,4 +32,34 @@
         android:text="Configure Vehicle"
         android:id="@+id/configure_vehicle_button"/>
 
+    <TextView
+        android:text="You have travelled"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/total_distance_travelled"
+        android:text=""
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="and saved"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/total_gallons_saved"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/total_money_saved"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </LinearLayout>

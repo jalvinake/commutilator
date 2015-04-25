@@ -76,6 +76,10 @@ public class TripManager {
     Double totalGallonsSaved = 0.0;
     Double totalMoneySaved = 0.0;
 
+    Double totalDistanceTravelledForCompletedTrips = 0.0;
+    Double totalGallonsSavedForCompletedTrips = 0.0;
+    Double totalMoneySavedForCompletedTrips = 0.0;
+
     private void calculateTripMetricsForTripHistory() {
         for(Trip trip : getTripHistory()) {
             updateTripMetricsWithNewTrip(trip);
@@ -83,9 +87,19 @@ public class TripManager {
     }
 
     private void updateTripMetricsWithNewTrip(Trip trip){
-        setTotalMoneySaved(getTotalMoneySaved() + trip.getAmountSaved());
-        setTotalDistanceTravelled(getTotalDistanceTravelled() + trip.getDistance());
-        setTotalGallonsSaved(getTotalGallonsSaved() + trip.getGallonsSaved());
+        totalMoneySavedForCompletedTrips = totalMoneySavedForCompletedTrips + trip.getAmountSaved();
+        totalDistanceTravelledForCompletedTrips = totalDistanceTravelledForCompletedTrips + trip.getDistance();
+        totalGallonsSavedForCompletedTrips = totalGallonsSavedForCompletedTrips + trip.getGallonsSaved();
+
+        totalMoneySaved = totalMoneySavedForCompletedTrips;
+        totalDistanceTravelled = totalDistanceTravelledForCompletedTrips;
+        totalGallonsSaved = totalGallonsSavedForCompletedTrips;
+    }
+
+    private void updateTripMetricsForActiveTrip(Trip trip){
+        totalMoneySaved = totalMoneySavedForCompletedTrips + trip.getAmountSaved();
+        totalDistanceTravelled = totalDistanceTravelledForCompletedTrips + trip.getDistance();
+        totalGallonsSaved = totalGallonsSavedForCompletedTrips + getTotalGallonsSaved();
     }
 
     public Trip getTrip(UUID id) {
@@ -108,9 +122,12 @@ public class TripManager {
 
         if(currentTrip != null){
             currentTrip.addRoutePoint(point);
+
+            updateTripMetricsForActiveTrip(currentTrip);
+
+            UpdateTripObservers(point);
         }
 
-        UpdateTripObservers(point);
     }
 
     public void StartTrip(Double gasPrice, Vehicle vehicle){
@@ -127,7 +144,7 @@ public class TripManager {
 
     private void startLocationUpdates() {
         tripLocationListener = new TripLocationListener(this);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 20, tripLocationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, tripLocationListener);
     }
 
     private void stopLocationUpdates() {
