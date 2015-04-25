@@ -48,7 +48,8 @@ public class CommutilatorHome extends ActionBarActivity {
 
         if(vehicleManager.getVehicleIsConfigured() == true) {
             new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
-            configVehicle.setText(vehicleManager.getCurrentVehicle().getVehicleId());
+            Vehicle v = vehicleManager.getCurrentVehicle();
+            configVehicle.setText(v.getMake() + " " + v.getModel() + " " + v.getYear());
         }
         else {
             configVehicle.setText("Configure Vehicle");
