@@ -172,8 +172,17 @@ public class TripManager {
 
     public void LoadTrips(Context context){
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
+        try {
+            LoadTripHistoryFromFile(context);
+        }
+        catch (Exception ex){
+            populateTestTrips();
+        }
         calculateTripMetricsForTripHistory();
+    }
+
+    public void SaveTrips(Context context){
+            SaveTripHistoryToFile(context);
     }
 
     private void populateTestTrips() {
@@ -224,14 +233,16 @@ public class TripManager {
         }
     }
 
-    public void SaveTripHistoryToFile(Context context) {
+
+    private void SaveTripHistoryToFile(Context context) {
         JSONSerializer jsonIzer = new JSONSerializer();
         jsonIzer.Serialize(tripHistory, _trip_history_file_name, context);
     }
 
-    public void LoadTripHistoryFromFile(Context context) {
+    @SuppressWarnings("unchecked") //since we are deserializing to a generic, we'll always get an unchecked cast -- ignore
+    private void LoadTripHistoryFromFile(Context context) {
         JSONSerializer jsonIzer = new JSONSerializer();
-        Type tripHistoryDictionaryType = new TypeToken<Map<UUID, Trip>>() {}.getType();
-        //tripHistory = jsonIzer.Deserialize(tripHistoryDictionaryType, _trip_history_file_name, context);
+        Type tripHistoryType = new TypeToken<Map<UUID, Trip>>(){}.getType();
+        tripHistory = (Map<UUID, Trip>) jsonIzer.Deserialize(tripHistoryType, _trip_history_file_name, context);
     }
 }

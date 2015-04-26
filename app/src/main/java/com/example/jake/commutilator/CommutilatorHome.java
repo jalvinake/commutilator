@@ -83,6 +83,13 @@ public class CommutilatorHome extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tripManager.SaveTrips(getApplicationContext());
+    }
+
+
     private void setTripMetricTextViews(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved){
         totalDistanceTravelledTextView.setText(totalDistanceTravelled.toString() + " miles");
         totalMoneySavedTextView.setText("$" + totalMoneySaved.toString());
