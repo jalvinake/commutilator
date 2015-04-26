@@ -3,8 +3,11 @@ package com.example.jake.commutilator;
 import android.content.Context;
 import android.location.LocationManager;
 
+import com.example.jake.commutilator.Utilities.JSONSerializer;
 import com.example.jake.commutilator.Vehicles.Vehicle;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.lang.reflect.Type;
 
 /**
  * Created by Jake on 4/21/2015.
@@ -47,6 +51,8 @@ public class TripManager {
     }
 
     Map<UUID, Trip> tripHistory;
+
+    private final String _trip_history_file_name = "trip_history";
 
     public Double getTotalDistanceTravelled() {
         return totalDistanceTravelled;
@@ -216,5 +222,16 @@ public class TripManager {
         for(TripUpdateObserver tripUpdateObserver : tripUpdateObservers){
             tripUpdateObserver.HandleNewPointAdded(getTotalMoneySaved(), getTotalDistanceTravelled(), getTotalGallonsSaved(), newPoint, getCurrentTrip());
         }
+    }
+
+    public void SaveTripHistoryToFile(Context context) {
+        JSONSerializer jsonIzer = new JSONSerializer();
+        jsonIzer.Serialize(tripHistory, _trip_history_file_name, context);
+    }
+
+    public void LoadTripHistoryFromFile(Context context) {
+        JSONSerializer jsonIzer = new JSONSerializer();
+        Type tripHistoryDictionaryType = new TypeToken<Map<UUID, Trip>>() {}.getType();
+        //tripHistory = jsonIzer.Deserialize(tripHistoryDictionaryType, _trip_history_file_name, context);
     }
 }
