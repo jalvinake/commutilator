@@ -167,17 +167,11 @@ public class TripManager {
         updateTripMetricsWithNewTrip(currentTrip);
         tripHistory.put(currentTrip.getId(), currentTrip);
         currentTrip = null;
-
     }
 
     public void LoadTrips(Context context){
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        try {
-            LoadTripHistoryFromFile(context);
-        }
-        catch (Exception ex){
-            populateTestTrips();
-        }
+        LoadTripHistoryFromFile(context);
         calculateTripMetricsForTripHistory();
     }
 
@@ -242,7 +236,16 @@ public class TripManager {
     @SuppressWarnings("unchecked") //since we are deserializing to a generic, we'll always get an unchecked cast -- ignore
     private void LoadTripHistoryFromFile(Context context) {
         JSONSerializer jsonIzer = new JSONSerializer();
-        Type tripHistoryType = new TypeToken<Map<UUID, Trip>>(){}.getType();
-        tripHistory = (Map<UUID, Trip>) jsonIzer.Deserialize(tripHistoryType, _trip_history_file_name, context);
+        Type tripHistoryType = new TypeToken<Map<UUID, Trip>>() {}.getType();
+
+        try {
+            tripHistory = (Map<UUID, Trip>) jsonIzer.Deserialize(tripHistoryType, _trip_history_file_name, context);
+        } catch (Exception ex){
+            //we had trouble loading the file -- we default to null history and move on
+            tripHistory = null;
+        }
+        if (tripHistory == null) {
+            populateTestTrips();
+        }
     }
 }

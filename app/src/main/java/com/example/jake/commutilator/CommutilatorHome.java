@@ -73,6 +73,7 @@ public class CommutilatorHome extends ActionBarActivity {
             public void onClick(View v) {
                 if (tripManager.getTripIsActive() == true) {
                     tripManager.EndTrip();
+                    tripManager.SaveTrips(getApplicationContext());
                     ((Button) v).setText("START");
                 } else {
 
