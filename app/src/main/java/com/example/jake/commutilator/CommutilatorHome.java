@@ -1,6 +1,8 @@
 package com.example.jake.commutilator;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -26,6 +28,9 @@ public class CommutilatorHome extends ActionBarActivity {
     TextView totalDistanceTravelledTextView;
     TextView totalGallonsSavedTextView;
     TextView totalMoneySavedTextView;
+    TextView currentFuelPriceTextView;
+    Button configVehicle;
+    Button startStopButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +42,15 @@ public class CommutilatorHome extends ActionBarActivity {
         tripManager = TripManager.getInstance();
         tripManager.LoadTrips(getApplicationContext());
 
-        final TextView currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
+        currentFuelPriceTextView = (TextView) findViewById(R.id.current_fuel_price);
         totalDistanceTravelledTextView = (TextView) findViewById(R.id.total_distance_travelled);
         totalGallonsSavedTextView = (TextView) findViewById(R.id.total_gallons_saved);
         totalMoneySavedTextView = (TextView) findViewById(R.id.total_money_saved);
 
-        setTripMetricTextViews(tripManager.getTotalMoneySaved(), tripManager.getTotalDistanceTravelled(), tripManager.getTotalGallonsSaved());
-
         TripMetricsTextViewUpdater tripMetricsUpdater = new TripMetricsTextViewUpdater();
         tripManager.AddTripUpdateObserver(tripMetricsUpdater);
 
-        final Button configVehicle = (Button) findViewById(R.id.configure_vehicle_button);
+        configVehicle = (Button) findViewById(R.id.configure_vehicle_button);
         configVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,15 +62,10 @@ public class CommutilatorHome extends ActionBarActivity {
         });
 
         if(vehicleManager.getVehicleIsConfigured() == true) {
-            new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle(), currentFuelPriceTextView).execute();
-            Vehicle v = vehicleManager.getCurrentVehicle();
-            configVehicle.setText(v.getMake() + " " + v.getModel() + " " + v.getYear());
-        }
-        else {
-            configVehicle.setText("Configure Vehicle");
+            new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle()).execute();
         }
 
-        final Button startStopButton = (Button) findViewById(R.id.start_stop_button);
+        startStopButton = (Button) findViewById(R.id.start_stop_button);
         final Button tripButton = (Button) findViewById(R.id.trip_button);
 
         startStopButton.setOnClickListener(new View.OnClickListener() {
@@ -76,11 +74,9 @@ public class CommutilatorHome extends ActionBarActivity {
                 if (tripManager.getTripIsActive() == true) {
                     tripManager.EndTrip();
                     tripManager.SaveTrips(getApplicationContext());
-                    ((Button) v).setText("START");
                     tripButton.setText("Trip History");
                 } else {
                     tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
-                    ((Button) v).setText("STOP");
                     tripButton.setText("Current Trip");
                 }
             }
@@ -97,16 +93,52 @@ public class CommutilatorHome extends ActionBarActivity {
                     Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
                     startActivity(tripHistoryIntent);
                 }
+
+                updateTripStartStopButton();
             }
         });
     }
 
 
 
+    private void updateTripStartStopButton()
+    {
+        if (tripManager.getTripIsActive() == false) {
+            startStopButton.setText("START");
+            startStopButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
+        } else {
+            startStopButton.setText("STOP");
+            startStopButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+        }
+    }
+
+    private void updateFuelPriceText()
+    {
+        currentFuelPriceTextView.setText("$" + String.valueOf(currentFuelPrice));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         tripManager.SaveTrips(getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setTripMetricTextViews(tripManager.getTotalMoneySaved(), tripManager.getTotalDistanceTravelled(), tripManager.getTotalGallonsSaved());
+
+        if(vehicleManager.getVehicleIsConfigured() == true) {
+            Vehicle v = vehicleManager.getCurrentVehicle();
+            configVehicle.setText(v.getMake() + " " + v.getModel() + " " + v.getYear());
+        }
+        else {
+            configVehicle.setText("Configure Vehicle");
+        }
+
+        updateTripStartStopButton();
+        updateFuelPriceText();
     }
 
     private void setTripMetricTextViews(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved){
@@ -152,11 +184,9 @@ public class CommutilatorHome extends ActionBarActivity {
     }
 
     private class FuelPriceDataUpdaterTask extends AsyncTask<Void, Void, FuelPriceData> {
-        private TextView textView;
         private Vehicle vehicle;
 
-        public FuelPriceDataUpdaterTask(Vehicle currentVehicle, TextView myTextbox) {
-            textView = myTextbox;
+        public FuelPriceDataUpdaterTask(Vehicle currentVehicle) {
             vehicle = currentVehicle;
         }
 
@@ -176,7 +206,7 @@ public class CommutilatorHome extends ActionBarActivity {
         protected void onPostExecute(FuelPriceData fuelPriceData) {
             if (fuelPriceData != null) {
                 currentFuelPrice = fuelPriceData.regular;
-                textView.setText(fuelPriceData.regular.toString());
+                updateFuelPriceText();
             }
         }
     }
