@@ -168,8 +168,12 @@ public class TripManager {
         tripIsActive = false;
         stopLocationUpdates();
         currentTrip.EndTrip();
-        updateTripMetricsWithNewTrip(currentTrip);
-        tripHistory.put(currentTrip.getId(), currentTrip);
+
+        if(currentTrip.getDistance() >= 0.02) {
+            updateTripMetricsWithNewTrip(currentTrip);
+            tripHistory.put(currentTrip.getId(), currentTrip);
+        }
+
         currentTrip = null;
     }
 
