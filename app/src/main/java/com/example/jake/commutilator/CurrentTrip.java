@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,21 +36,17 @@ public class CurrentTrip extends FragmentActivity {
     TextView amountSaved;
     TextView durationText;
     TextView gallonsSaved;
-    VehicleManager vehicleManager;
     TripManager tripManager;
-    double currentFuelPrice;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        vehicleManager = VehicleManager.getInstance();
         tripManager = TripManager.getInstance();
-
-
         Intent intent = getIntent();
         tripId = UUID.fromString(intent.getStringExtra(CURRENT_TRIP_ID));
-        setContentView(R.layout.activity_trip_detail);
+        setContentView(R.layout.activity_current_trip);
         populateTripDetails(tripId);
         setupMap(tripId);
 
@@ -99,7 +96,8 @@ public class CurrentTrip extends FragmentActivity {
         startTime.setText(new SimpleDateFormat("EEE MMM dd hh:mm a").format(trip.getStartTime()));
         distance.setText(new DecimalFormat("0.00 miles").format(trip.getDistance()));
         amountSaved.setText(new DecimalFormat("$0.00").format(trip.getAmountSaved()));
-        Double duration = (trip.getEndTime().getTime() - trip.getStartTime().getTime()) / 60000.;
+        Date now = new Date();
+        Double duration = (now.getTime() - trip.getStartTime().getTime()) / 60000.;
         durationText.setText(new DecimalFormat("0.00 minutes").format(duration));
         gallonsSaved.setText(new DecimalFormat("0.0 gallons").format(trip.getGallonsSaved()));
     }

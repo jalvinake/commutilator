@@ -91,6 +91,7 @@ public class CommutilatorHome extends ActionBarActivity {
             public void onClick(View v) {
                 if (tripManager.getTripIsActive() == true) {
                     Intent currentTripIntent = new Intent(CommutilatorHome.this, CurrentTrip.class);
+                    currentTripIntent.putExtra(CurrentTrip.CURRENT_TRIP_ID, tripManager.getCurrentTrip().getId().toString());
                     startActivity(currentTripIntent);
                 }
                 else {

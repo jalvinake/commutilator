@@ -46,6 +46,10 @@
             android:name=".TripDetail"
             android:label="@string/title_activity_trip_detail" >
         </activity>
+        <activity
+            android:name=".CurrentTrip"
+            android:label="@string/title_activity_current_trip" >
+        </activity>
     </application>
 
 </manifest>
