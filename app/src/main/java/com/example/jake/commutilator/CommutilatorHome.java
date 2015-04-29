@@ -20,6 +20,8 @@ import com.example.jake.commutilator.Vehicles.FuelPriceData;
 import com.example.jake.commutilator.Vehicles.FuelPriceDataRetriever;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.DecimalFormat;
+
 
 public class CommutilatorHome extends ActionBarActivity {
     VehicleManager vehicleManager;
@@ -144,9 +146,9 @@ public class CommutilatorHome extends ActionBarActivity {
     }
 
     private void setTripMetricTextViews(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved){
-        totalDistanceTravelledTextView.setText(totalDistanceTravelled.toString() + " miles");
-        totalMoneySavedTextView.setText("$" + totalMoneySaved.toString());
-        totalGallonsSavedTextView.setText(totalGallonsSaved + " gal");
+        totalDistanceTravelledTextView.setText(new DecimalFormat("0.00 miles").format(totalDistanceTravelled));
+        totalMoneySavedTextView.setText(new DecimalFormat("$0.00").format(totalMoneySaved));
+        totalGallonsSavedTextView.setText(new DecimalFormat("0.00 gal").format(totalGallonsSaved));
     }
 
     @Override
