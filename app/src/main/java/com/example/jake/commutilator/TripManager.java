@@ -145,7 +145,7 @@ public class TripManager {
         currentTrip.setGasPriceInDollars(gasPrice);
         currentTrip.setId(UUID.randomUUID());
         currentTrip.setVehicleId(vehicle.getVehicleId());
-        currentTrip.setMilesPerGallon(vehicle.getFuelData().CombinedMPG);
+        currentTrip.setMilesPerGallon(vehicle.getFuelData().getCombinedMPG());
         currentTrip.StartTrip();
 
         startLocationUpdates();

@@ -9,5 +9,6 @@
     <string name="title_activity_trip_history">TripHistory</string>
     <string name="title_activity_trip_detail">TripDetail</string>
     <string name="title_activity_current_trip">CurrentTrip</string>
+    <string name="db_name">COMMUTILATOR.db</string>
 
 </resources>

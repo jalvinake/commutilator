@@ -31,7 +31,6 @@ public class CommutilatorHome extends ActionBarActivity {
     TextView currentFuelPriceTextView;
     Button configVehicle;
     Button startStopButton;
-    Button tripButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +65,27 @@ public class CommutilatorHome extends ActionBarActivity {
             new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle()).execute();
         }
 
-        startStopButton = (Button) findViewById(R.id.start_stop_button);
-        tripButton = (Button) findViewById(R.id.trip_button);
+<<<<<<< HEAD
+        final Button startStopButton = (Button) findViewById(R.id.start_stop_button);
+        final Button tripButton = (Button) findViewById(R.id.trip_button);
 
+=======
+        startStopButton = (Button) findViewById(R.id.start_stop_button);
+>>>>>>> Fixing resume of CommutilatorHome
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tripManager.getTripIsActive() == true) {
                     tripManager.EndTrip();
                     tripManager.SaveTrips(getApplicationContext());
+<<<<<<< HEAD
+                    ((Button) v).setText("START");
+                    tripButton.setText("Trip History");
                 } else {
                     tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
+                    ((Button) v).setText("STOP");
+                    tripButton.setText("Current Trip");
                 }
-
-                updateTripStartStopButton();
             }
         });
 
@@ -88,29 +94,33 @@ public class CommutilatorHome extends ActionBarActivity {
             public void onClick(View v) {
                 if (tripManager.getTripIsActive() == true) {
                     Intent currentTripIntent = new Intent(CommutilatorHome.this, CurrentTrip.class);
-                    currentTripIntent.putExtra(CurrentTrip.CURRENT_TRIP_ID, tripManager.getCurrentTrip().getId().toString());
                     startActivity(currentTripIntent);
                 }
                 else {
                     Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
                     startActivity(tripHistoryIntent);
+=======
+                } else {
+                    tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
+>>>>>>> Fixing resume of CommutilatorHome
                 }
+
+                updateTripStartStopButton();
             }
         });
     }
 
+<<<<<<< HEAD
 
-
+=======
     private void updateTripStartStopButton()
     {
         if (tripManager.getTripIsActive() == false) {
             startStopButton.setText("START");
             startStopButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
-            tripButton.setText("Trip History");
         } else {
             startStopButton.setText("STOP");
             startStopButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
-            tripButton.setText("Current Trip");
         }
     }
 
@@ -118,6 +128,7 @@ public class CommutilatorHome extends ActionBarActivity {
     {
         currentFuelPriceTextView.setText("$" + String.valueOf(currentFuelPrice));
     }
+>>>>>>> Fixing resume of CommutilatorHome
 
     @Override
     protected void onDestroy() {
@@ -125,6 +136,8 @@ public class CommutilatorHome extends ActionBarActivity {
         tripManager.SaveTrips(getApplicationContext());
     }
 
+<<<<<<< HEAD
+=======
     @Override
     protected void onResume() {
         super.onResume();
@@ -143,6 +156,8 @@ public class CommutilatorHome extends ActionBarActivity {
         updateFuelPriceText();
     }
 
+
+>>>>>>> Fixing resume of CommutilatorHome
     private void setTripMetricTextViews(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved){
         totalDistanceTravelledTextView.setText(totalDistanceTravelled.toString() + " miles");
         totalMoneySavedTextView.setText("$" + totalMoneySaved.toString());
