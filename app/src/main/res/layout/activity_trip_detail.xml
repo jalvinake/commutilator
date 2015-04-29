@@ -71,4 +71,11 @@
         android:id="@+id/route_map"
         class="com.google.android.gms.maps.SupportMapFragment"/>
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Trip"
+        android:layout_below="@id/route_map"
+        android:id="@+id/trip_details_delete_trip_button"/>
+
 </RelativeLayout>

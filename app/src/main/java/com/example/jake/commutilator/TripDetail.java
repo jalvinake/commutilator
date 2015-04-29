@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -44,6 +46,17 @@ public class TripDetail extends FragmentActivity {
         populateTripDetails(tripId);
         setupMap(tripId);
 
+        final Button deleteTrip = (Button) findViewById(R.id.trip_details_delete_trip_button);
+        deleteTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tripManager.tripHistory.remove(tripId);
+                tripManager.SaveTrips(getApplicationContext());
+                //Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
+                //startActivity(vehicleConfigurationIntent);
+                finish();
+            }
+        });
     }
 
     private void setupMap(UUID tripID) {
@@ -116,4 +129,6 @@ public class TripDetail extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
