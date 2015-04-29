@@ -24,10 +24,21 @@ public class TripHistory extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_history);
         tripManager = TripManager.getInstance();
+        setContentView(R.layout.activity_trip_history);
+        refreshTripsList();
+    }
+
+    private void refreshTripsList() {
         setListAdapter(new TripAdapter(this, R.layout.trip_item, tripManager.getTripHistory()));
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshTripsList();
+    }
+
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {

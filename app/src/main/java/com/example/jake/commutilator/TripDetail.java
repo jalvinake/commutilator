@@ -59,6 +59,7 @@ public class TripDetail extends FragmentActivity {
         });
     }
 
+
     private void setupMap(UUID tripID) {
         if (mMap == null) {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.route_map)).getMap();
