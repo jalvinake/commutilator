@@ -213,7 +213,7 @@ public class VehicleConfiguration extends ActionBarActivity {
         @Override
         protected void onPostExecute(VehicleFuelData vehicleFuelData) {
             vehicle.setFuelData(vehicleFuelData);
-            textView.setText(vehicleFuelData.CombinedMPG.toString());
+            textView.setText(String.valueOf(vehicleFuelData.getCombinedMPG()));
         }
     }
 }
