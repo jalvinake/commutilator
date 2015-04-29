@@ -17,6 +17,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.lang.reflect.Type;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
 /**
  * Created by Jake on 4/21/2015.
  */
@@ -247,5 +251,47 @@ public class TripManager {
         if (tripHistory == null) {
             populateTestTrips();
         }
+
+//        List list = new ArrayList(tripHistory.entrySet());
+//
+//        java.util.Collections.sort(list, new Comparator() {
+//
+//            public int compare(Object o1, Object o2) {
+//                Map.Entry entry1 = (Map.Entry) o1;
+//                Map.Entry entry2 = (Map.Entry) o2;
+//
+//                Date tripDate1 = ((Trip) entry1.getValue())
+//                        .getEndTime();
+//                Date tripDate2 = ((Trip) entry2.getValue())
+//                        .getEndTime();
+//                return tripDate1.compareTo(tripDate2);
+//
+//            }
+//        });
+//
+//        Map<UUID, Trip> newTripHistory = new Map<UUID, Trip>;
+//
+//        for (Iterator listIt = list.iterator(); listIt.hasNext();) {
+//            Map.Entry sitePairs = (Map.Entry) listIt.next();
+//            newTripHistory.put(sitePairs.getKey(), sitePairs.getValue());
+//        }
+//
+//        tripHistory = newTripHistory;
+//
+
+//        List<Map.Entry<UUID, Trip>> tripHistoryEntryList = new ArrayList<Map.Entry<UUID, Trip>>(tripHistory.entrySet());
+//
+//        Collections.sort(
+//                tripHistoryEntryList, new Comparator<Map.Entry<UUID, Trip>>() {
+//                    @Override
+//                    public int compare(Map.Entry<Integer, Trip> trip1,
+//                                       Map.Entry<Integer, Trip> trip2) {
+//                        return trip1.getValue().getEndTime().compareTo(trip2.getValue().getEndTime());
+//                    }
+//                }
+//        );
+//
+ //       tripHistory = tripHistoryEntryL
+
     }
 }
