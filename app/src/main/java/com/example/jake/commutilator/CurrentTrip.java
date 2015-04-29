@@ -2,19 +2,15 @@ package com.example.jake.commutilator;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.UUID;
-
+import com.example.jake.commutilator.Vehicles.VehicleManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -22,10 +18,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.UUID;
 
-public class TripDetail extends FragmentActivity {
-    public final static String CURRENT_TRIP_ID = "TripDetail.CurrentTripId";
-    private TripManager tripManager;
+
+public class CurrentTrip extends FragmentActivity {
+    public final static String CURRENT_TRIP_ID = "CurrentTrip.CurrentTripId";
     private Trip trip;
     private UUID tripId;
     private GoogleMap mMap;
@@ -35,30 +35,25 @@ public class TripDetail extends FragmentActivity {
     TextView amountSaved;
     TextView durationText;
     TextView gallonsSaved;
+    VehicleManager vehicleManager;
+    TripManager tripManager;
+    double currentFuelPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        vehicleManager = VehicleManager.getInstance();
         tripManager = TripManager.getInstance();
+
+
         Intent intent = getIntent();
         tripId = UUID.fromString(intent.getStringExtra(CURRENT_TRIP_ID));
         setContentView(R.layout.activity_trip_detail);
         populateTripDetails(tripId);
         setupMap(tripId);
 
-        final Button deleteTrip = (Button) findViewById(R.id.trip_details_delete_trip_button);
-        deleteTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tripManager.tripHistory.remove(tripId);
-                tripManager.SaveTrips(getApplicationContext());
-                //Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
-                //startActivity(vehicleConfigurationIntent);
-                finish();
-            }
-        });
     }
-
 
     private void setupMap(UUID tripID) {
         if (mMap == null) {
@@ -130,6 +125,4 @@ public class TripDetail extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

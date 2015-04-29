@@ -68,6 +68,8 @@ public class CommutilatorHome extends ActionBarActivity {
         }
 
         final Button startStopButton = (Button) findViewById(R.id.start_stop_button);
+        final Button tripButton = (Button) findViewById(R.id.trip_button);
+
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,21 +77,37 @@ public class CommutilatorHome extends ActionBarActivity {
                     tripManager.EndTrip();
                     tripManager.SaveTrips(getApplicationContext());
                     ((Button) v).setText("START");
+                    tripButton.setText("Trip History");
                 } else {
-
                     tripManager.StartTrip(currentFuelPrice, vehicleManager.getCurrentVehicle());
                     ((Button) v).setText("STOP");
+                    tripButton.setText("Current Trip");
+                }
+            }
+        });
+
+        tripButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tripManager.getTripIsActive() == true) {
+                    Intent currentTripIntent = new Intent(CommutilatorHome.this, CurrentTrip.class);
+                    startActivity(currentTripIntent);
+                }
+                else {
+                    Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
+                    startActivity(tripHistoryIntent);
                 }
             }
         });
     }
+
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         tripManager.SaveTrips(getApplicationContext());
     }
-
 
     private void setTripMetricTextViews(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved){
         totalDistanceTravelledTextView.setText(totalDistanceTravelled.toString() + " miles");
