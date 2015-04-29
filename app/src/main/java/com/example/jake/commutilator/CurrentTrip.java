@@ -42,24 +42,37 @@ public class CurrentTrip extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         tripManager = TripManager.getInstance();
+
         Intent intent = getIntent();
         tripId = UUID.fromString(intent.getStringExtra(CURRENT_TRIP_ID));
+        trip = tripManager.getTrip(tripId);
         setContentView(R.layout.activity_current_trip);
-        populateTripDetails(tripId);
-        setupMap(tripId);
+
+        CurrentTripUpdater currentTripUpdater = new CurrentTripUpdater();
+        tripManager.AddTripUpdateObserver(currentTripUpdater);
+
+        //populateTripDetails(trip);
+        //setupMap(trip);
 
     }
 
-    private void setupMap(UUID tripID) {
+    private class CurrentTripUpdater implements TripUpdateObserver{
+
+        @Override
+        public void HandleNewPointAdded(Double totalMoneySaved, Double totalDistanceTravelled, Double totalGallonsSaved, LatLng newPoint, Trip updatedTrip) {
+            populateTripDetails(updatedTrip);
+            setupMap(trip);
+        }
+    }
+
+    private void setupMap(Trip trip) {
         if (mMap == null) {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.route_map)).getMap();
         }
 
         if (mMap != null) {
 
-            trip = tripManager.getTrip(tripId);
             List<LatLng> routePoints = trip.getRoutePoints();
 
             if (routePoints.size() > 0) {
@@ -85,8 +98,7 @@ public class CurrentTrip extends FragmentActivity {
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bc.build(),360,360,50));
     }
 
-    public void populateTripDetails(UUID tripId) {
-        trip = tripManager.getTrip(tripId);
+    public void populateTripDetails(Trip trip) {
         startTime = (TextView) findViewById(R.id.start_time_text);
         distance = (TextView) findViewById(R.id.distance_text);
         amountSaved = (TextView) findViewById(R.id.amount_saved_text);
