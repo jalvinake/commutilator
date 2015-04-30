@@ -57,8 +57,10 @@ public class CommutilatorHome extends ActionBarActivity {
         configVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
-                startActivity(vehicleConfigurationIntent);
+                if (!tripManager.getTripIsActive()){
+                    Intent vehicleConfigurationIntent  = new Intent(CommutilatorHome.this, VehicleConfiguration.class);
+                    startActivity(vehicleConfigurationIntent);
+                }
             }
 
 
@@ -82,6 +84,7 @@ public class CommutilatorHome extends ActionBarActivity {
                 }
 
                 updateTripStartStopButton();
+                updateConfigVehicleButton();
             }
         });
 
@@ -102,6 +105,10 @@ public class CommutilatorHome extends ActionBarActivity {
     }
 
 
+    private void updateConfigVehicleButton()
+    {
+            configVehicle.setEnabled(!tripManager.getTripIsActive());
+    }
 
     private void updateTripStartStopButton()
     {
@@ -109,11 +116,13 @@ public class CommutilatorHome extends ActionBarActivity {
             startStopButton.setText("START");
             startStopButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
             tripButton.setText("Trip History");
-        } else {
+        }
+        else {
             startStopButton.setText("STOP");
             startStopButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
             tripButton.setText("Current Trip");
         }
+        startStopButton.setEnabled(vehicleManager.getVehicleIsConfigured());
     }
 
     private void updateFuelPriceText()
@@ -141,6 +150,7 @@ public class CommutilatorHome extends ActionBarActivity {
             configVehicle.setText("Configure Vehicle");
         }
 
+        updateConfigVehicleButton();
         updateTripStartStopButton();
         updateFuelPriceText();
     }
@@ -157,6 +167,16 @@ public class CommutilatorHome extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_commutilator_home, menu);
         return true;
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem vehicleItem = menu.findItem(R.id.action_vehicle_configuration);
+
+        //vehicleItem.setVisible(!tripManager.getTripIsActive()); -- let's just disable it for now so user knows about it
+        vehicleItem.setEnabled(!tripManager.getTripIsActive());
+        return true;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
