@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
 
 
 public class TripHistory extends ListActivity {
@@ -30,7 +35,9 @@ public class TripHistory extends ListActivity {
     }
 
     private void refreshTripsList() {
-        setListAdapter(new TripAdapter(this, R.layout.trip_item, tripManager.getTripHistory()));
+        List<Trip> tripHistory = tripManager.getTripHistory();
+        Collections.sort(tripHistory);
+        setListAdapter(new TripAdapter(this, R.layout.trip_item, tripHistory));
     }
 
     @Override

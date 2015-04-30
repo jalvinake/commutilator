@@ -7,11 +7,12 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Trip {
+public class Trip implements Comparable<Trip> {
 
     public Trip(Date startTime, Date endTime, Double gasPriceInDollars, Double milesPerGallon){
         this.startTime = startTime;
@@ -155,5 +156,10 @@ public class Trip {
 
     public void setGallonsSaved(Double gallonsSaved) {
         this.gallonsSaved = gallonsSaved;
+    }
+
+    @Override
+    public int compareTo(Trip other){
+        return this.getEndTime().compareTo(other.getEndTime());
     }
 }

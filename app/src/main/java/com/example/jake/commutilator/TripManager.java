@@ -17,10 +17,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.lang.reflect.Type;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-
 /**
  * Created by Jake on 4/21/2015.
  */
@@ -193,6 +189,10 @@ public class TripManager {
         Trip trip1 = new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), 3.12, 18.3);
         Trip trip2 = new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), 2.56, 22.1);
 
+        Trip trip3 = new Trip(new Date(2015, 5, 4, 8, 30, 0), new Date(2015, 5, 4, 8, 56, 0), 3.12, 18.3);
+        Trip trip4 = new Trip(new Date(2015, 3, 4, 10, 40, 0), new Date(2015, 3, 4, 11, 40, 0), 2.56, 22.1);
+
+
         trip1.addRoutePoint(new LatLng(44.974144, -93.232254));
         trip1.addRoutePoint(new LatLng(44.973593, -93.232157));
         trip1.addRoutePoint(new LatLng(44.973552, -93.223907));
@@ -212,11 +212,30 @@ public class TripManager {
         trip2.addRoutePoint(new LatLng(44.963802, -93.360968));
         trip2.addRoutePoint(new LatLng(44.966140, -93.362169));
 
+
+        trip3.addRoutePoint(new LatLng(44.974144, -93.232254));
+        trip3.addRoutePoint(new LatLng(44.973593, -93.232157));
+        trip3.addRoutePoint(new LatLng(44.973552, -93.223907));
+        trip3.addRoutePoint(new LatLng(44.967267, -93.222528));
+
+
+        trip4.addRoutePoint(new LatLng(44.974144, -93.232254));
+        trip4.addRoutePoint(new LatLng(44.973593, -93.232157));
+        trip4.addRoutePoint(new LatLng(44.973552, -93.223907));
+        trip4.addRoutePoint(new LatLng(44.967267, -93.222528));
+
+
         trip1.setId(UUID.randomUUID());
         trip2.setId(UUID.randomUUID());
+        trip3.setId(UUID.randomUUID());
+        trip4.setId(UUID.randomUUID());
+
 
         tripHistory.put(trip1.getId(),trip1);
         tripHistory.put(trip2.getId(),trip2);
+        tripHistory.put(trip3.getId(),trip3);
+        tripHistory.put(trip4.getId(),trip4);
+
     }
 
     List<TripUpdateObserver> tripUpdateObservers = new ArrayList<TripUpdateObserver>();
@@ -255,47 +274,5 @@ public class TripManager {
         if (tripHistory == null) {
             populateTestTrips();
         }
-
-//        List list = new ArrayList(tripHistory.entrySet());
-//
-//        java.util.Collections.sort(list, new Comparator() {
-//
-//            public int compare(Object o1, Object o2) {
-//                Map.Entry entry1 = (Map.Entry) o1;
-//                Map.Entry entry2 = (Map.Entry) o2;
-//
-//                Date tripDate1 = ((Trip) entry1.getValue())
-//                        .getEndTime();
-//                Date tripDate2 = ((Trip) entry2.getValue())
-//                        .getEndTime();
-//                return tripDate1.compareTo(tripDate2);
-//
-//            }
-//        });
-//
-//        Map<UUID, Trip> newTripHistory = new Map<UUID, Trip>;
-//
-//        for (Iterator listIt = list.iterator(); listIt.hasNext();) {
-//            Map.Entry sitePairs = (Map.Entry) listIt.next();
-//            newTripHistory.put(sitePairs.getKey(), sitePairs.getValue());
-//        }
-//
-//        tripHistory = newTripHistory;
-//
-
-//        List<Map.Entry<UUID, Trip>> tripHistoryEntryList = new ArrayList<Map.Entry<UUID, Trip>>(tripHistory.entrySet());
-//
-//        Collections.sort(
-//                tripHistoryEntryList, new Comparator<Map.Entry<UUID, Trip>>() {
-//                    @Override
-//                    public int compare(Map.Entry<Integer, Trip> trip1,
-//                                       Map.Entry<Integer, Trip> trip2) {
-//                        return trip1.getValue().getEndTime().compareTo(trip2.getValue().getEndTime());
-//                    }
-//                }
-//        );
-//
- //       tripHistory = tripHistoryEntryL
-
     }
 }
