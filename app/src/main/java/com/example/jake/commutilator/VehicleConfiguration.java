@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -111,6 +112,18 @@ public class VehicleConfiguration extends ActionBarActivity {
 
             }
         });
+
+        final Button saveVehicle = (Button) findViewById(R.id.vehicle_config_save_button);
+        saveVehicle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (vehicleManager.getVehicleIsConfigured()) {
+                    vehicleManager.SaveVehicle(getApplicationContext());
+                    finish();
+                }
+            }
+        });
+
     }
 
     @Override
