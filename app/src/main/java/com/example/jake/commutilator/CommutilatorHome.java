@@ -67,9 +67,7 @@ public class CommutilatorHome extends ActionBarActivity {
 
         });
 
-        if(vehicleManager.getVehicleIsConfigured() == true) {
-            new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle()).execute();
-        }
+
 
         startStopButton = (Button) findViewById(R.id.start_stop_button);
         tripButton = (Button) findViewById(R.id.trip_button);
@@ -108,7 +106,15 @@ public class CommutilatorHome extends ActionBarActivity {
 
     private void updateConfigVehicleButton()
     {
-            configVehicle.setEnabled(!tripManager.getTripIsActive());
+        if(vehicleManager.getVehicleIsConfigured() == true) {
+            Vehicle v = vehicleManager.getCurrentVehicle();
+            configVehicle.setText(v.getMake() + " " + v.getModel() + " " + v.getYear());
+        }
+        else {
+            configVehicle.setText("Configure Vehicle");
+        }
+
+        configVehicle.setEnabled(!tripManager.getTripIsActive());
     }
 
     private void updateTripStartStopButton()
@@ -147,15 +153,11 @@ public class CommutilatorHome extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        setTripMetricTextViews(tripManager.getTotalMoneySaved(), tripManager.getTotalDistanceTravelled(), tripManager.getTotalGallonsSaved());
-
         if(vehicleManager.getVehicleIsConfigured() == true) {
-            Vehicle v = vehicleManager.getCurrentVehicle();
-            configVehicle.setText(v.getMake() + " " + v.getModel() + " " + v.getYear());
+            new FuelPriceDataUpdaterTask(vehicleManager.getCurrentVehicle()).execute();
         }
-        else {
-            configVehicle.setText("Configure Vehicle");
-        }
+
+        setTripMetricTextViews(tripManager.getTotalMoneySaved(), tripManager.getTotalDistanceTravelled(), tripManager.getTotalGallonsSaved());
 
         updateConfigVehicleButton();
         updateTripStartStopButton();
