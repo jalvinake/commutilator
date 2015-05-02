@@ -27,6 +27,7 @@ public class CommutilatorHome extends ActionBarActivity {
     VehicleManager vehicleManager;
     TripManager tripManager;
     double currentFuelPrice;
+    boolean currentFuelPriceWasLoadedFromCache;
     TextView totalDistanceTravelledTextView;
     TextView totalGallonsSavedTextView;
     TextView totalMoneySavedTextView;
@@ -127,7 +128,13 @@ public class CommutilatorHome extends ActionBarActivity {
 
     private void updateFuelPriceText()
     {
-        currentFuelPriceTextView.setText("$" + String.valueOf(currentFuelPrice));
+        String appendedNote = "";
+
+        if (currentFuelPriceWasLoadedFromCache) {
+            appendedNote = " (cached)";
+        }
+        currentFuelPriceTextView.setText("$" + String.valueOf(currentFuelPrice) + appendedNote);
+
     }
 
     @Override
@@ -219,7 +226,7 @@ public class CommutilatorHome extends ActionBarActivity {
             try {
                 FuelPriceDataRetriever retriever = new FuelPriceDataRetriever();
                 //TODO: make decision on the price to return based on the vehicle
-                return retriever.getFuelPriceData();
+                return retriever.getFuelPriceData(getApplicationContext());
             } catch (Exception e) {
                 Log.e("FuelPriceData", e.getMessage(), e);
             }
@@ -230,7 +237,11 @@ public class CommutilatorHome extends ActionBarActivity {
         protected void onPostExecute(FuelPriceData fuelPriceData) {
             if (fuelPriceData != null) {
                 currentFuelPrice = fuelPriceData.regular;
+                currentFuelPriceWasLoadedFromCache = fuelPriceData.isFromCache;
                 updateFuelPriceText();
+            }
+            else {
+                throw new RuntimeException("Current FuelPriceData was not retrievable via Network or cache. Check data connection -- relaunch app then.");
             }
         }
     }

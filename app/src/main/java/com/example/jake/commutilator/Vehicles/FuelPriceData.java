@@ -8,6 +8,8 @@ import org.simpleframework.xml.Root;
  */
 @Root(name = "fuelPrices", strict=false)
 public class FuelPriceData {
+    public transient boolean isFromCache = false;
+
     @Element(name = "cng")
     public Double cng;
 

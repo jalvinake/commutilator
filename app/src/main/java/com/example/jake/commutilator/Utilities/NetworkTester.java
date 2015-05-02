@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by etjric on 4/26/15.
  */
-public class Network {
+public class NetworkTester {
     private final int _CONNECTION_TIMEOUT_SECONDS = 10;
     //harvested from --> http://stackoverflow.com/questions/1443166/android-how-to-check-if-the-server-is-available
     public boolean isURLReachable(Context context, URL url) {
