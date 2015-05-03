@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jake.commutilator.Vehicles.MakeRetriever;
 import com.example.jake.commutilator.Vehicles.ModelOptionRetriever;
@@ -159,6 +160,7 @@ public class VehicleConfiguration extends ActionBarActivity {
         Spinner vehiclePropertySpinner;
         VehicleMenuItemsRetriever menuItemRetriever;
         String text;
+        private Exception exceptionToBeThrown;
 
         public VehiclePropertyUpdaterTask(Spinner spinner, VehicleMenuItemsRetriever retriever, String selectionText){
             vehiclePropertySpinner = spinner;
@@ -172,6 +174,7 @@ public class VehicleConfiguration extends ActionBarActivity {
                 return menuItemRetriever.GetMenuItems();
             } catch (Exception e) {
                 Log.e("VehicleConfiguration", e.getMessage(), e);
+                exceptionToBeThrown = e;
             }
 
             return null;
@@ -179,6 +182,11 @@ public class VehicleConfiguration extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(ArrayList<VehicleMenuItem> vehicleMenuItems) {
+            if (exceptionToBeThrown != null) {
+                HandleNetworkError(exceptionToBeThrown);
+                return;
+            }
+
             ArrayAdapter<VehicleMenuItem> adapter = new ArrayAdapter<VehicleMenuItem>(getApplicationContext(),
                     R.layout.vehicle_spinner_item, vehicleMenuItems);
 
@@ -204,6 +212,8 @@ public class VehicleConfiguration extends ActionBarActivity {
     private class VehicleFuelDataUpdaterTask extends  AsyncTask<Void, Void, VehicleFuelData>{
         Vehicle vehicle;
         TextView textView;
+        private Exception exceptionToBeThrown;
+
 
         public VehicleFuelDataUpdaterTask(Vehicle currentVehicle, TextView mpgTextView)
         {
@@ -218,6 +228,7 @@ public class VehicleConfiguration extends ActionBarActivity {
                 return retriever.GetVehicleFuelData(vehicle.getVehicleId());
             } catch (Exception e) {
                 Log.e("VehicleFuelData", e.getMessage(), e);
+                exceptionToBeThrown = e;
             }
 
             return null;
@@ -225,8 +236,19 @@ public class VehicleConfiguration extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(VehicleFuelData vehicleFuelData) {
+            if (exceptionToBeThrown != null) {
+                HandleNetworkError(exceptionToBeThrown);
+                return;
+            }
             vehicle.setFuelData(vehicleFuelData);
             textView.setText(String.valueOf(vehicleFuelData.getCombinedMPG()));
         }
+    }
+
+    private void HandleNetworkError(Exception ex) {
+        final Button saveVehicle = (Button) findViewById(R.id.vehicle_config_save_button);
+        saveVehicle.setEnabled(false);
+
+        Toast.makeText(getApplicationContext(), "Data connection issue to fueleconomy.gov site. Back to retry.", Toast.LENGTH_LONG).show();
     }
 }
