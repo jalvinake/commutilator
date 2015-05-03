@@ -42,11 +42,10 @@ public class VehicleConfiguration extends ActionBarActivity {
         if(vehicleManager.getVehicleIsConfigured() == false)
         {
             vehicle = new Vehicle();
-            vehicleManager.setCurrentVehicle(vehicle);
         }
         else
         {
-            vehicle = vehicleManager.getCurrentVehicle();
+            vehicle = new Vehicle(vehicleManager.getCurrentVehicle());
         }
 
         final Spinner vehicleYearSpinner = (Spinner) findViewById(R.id.vehicle_year_selection);
@@ -118,10 +117,9 @@ public class VehicleConfiguration extends ActionBarActivity {
         saveVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (vehicleManager.getVehicleIsConfigured()) {
-                    vehicleManager.SaveVehicle(getApplicationContext());
-                    finish();
-                }
+                vehicleManager.setCurrentVehicle(vehicle);
+                vehicleManager.SaveVehicle(getApplicationContext());
+                finish();
             }
         });
 
@@ -246,7 +244,6 @@ public class VehicleConfiguration extends ActionBarActivity {
     private void HandleNetworkError(Exception ex) {
         final Button saveVehicle = (Button) findViewById(R.id.vehicle_config_save_button);
         saveVehicle.setEnabled(false);
-
         Toast.makeText(getApplicationContext(), "Data connection issue to fueleconomy.gov site. Back to retry.", Toast.LENGTH_LONG).show();
     }
 }

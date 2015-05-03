@@ -4,6 +4,20 @@ package com.example.jake.commutilator.Vehicles;
  * Created by Jake on 4/11/2015.
  */
 public class Vehicle {
+    public Vehicle(){
+
+    }
+
+    public Vehicle(Vehicle currentVehicle){
+        this.setYear(currentVehicle.getYear());
+        this.setMake(currentVehicle.getMake());
+        this.setModel(currentVehicle.getModel());
+        this.setModelOption(currentVehicle.getModelOption());
+        this.setFuelData(currentVehicle.getFuelData());
+        this.setVehicleId(currentVehicle.getVehicleId());
+    }
+
+
     public String getYear() {
         return year;
     }
