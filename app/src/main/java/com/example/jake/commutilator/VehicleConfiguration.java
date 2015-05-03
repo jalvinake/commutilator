@@ -130,8 +130,6 @@ public class VehicleConfiguration extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        vehicleManager.SaveVehicle(this);
     }
 
     @Override
