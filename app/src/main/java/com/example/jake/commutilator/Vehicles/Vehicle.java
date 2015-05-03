@@ -9,12 +9,12 @@ public class Vehicle {
     }
 
     public Vehicle(Vehicle currentVehicle){
-        this.setYear(currentVehicle.getYear());
-        this.setMake(currentVehicle.getMake());
-        this.setModel(currentVehicle.getModel());
-        this.setModelOption(currentVehicle.getModelOption());
-        this.setFuelData(currentVehicle.getFuelData());
-        this.setVehicleId(currentVehicle.getVehicleId());
+        this.setYear(new String(currentVehicle.getYear()));
+        this.setMake(new String(currentVehicle.getMake()));
+        this.setModel(new String(currentVehicle.getModel()));
+        this.setModelOption(new String(currentVehicle.getModelOption()));
+        this.setFuelData(new VehicleFuelData(currentVehicle.getFuelData()));
+        this.setVehicleId(new String(currentVehicle.getVehicleId()));
     }
 
 

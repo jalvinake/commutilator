@@ -8,6 +8,18 @@ import org.simpleframework.xml.Root;
  */
 @Root(name = "vehicle", strict=false)
 public class VehicleFuelData {
+    public VehicleFuelData(){
+
+    }
+    public VehicleFuelData(VehicleFuelData curVehFuelData){
+        CombinedMPGUnrounded = curVehFuelData.CombinedMPGUnrounded;
+        CityMPGUnrounded = curVehFuelData.CityMPGUnrounded;
+        HighwayMPGUnrounded = curVehFuelData.HighwayMPGUnrounded;
+        CombinedMPG = curVehFuelData.CombinedMPG;
+        CityMPG = curVehFuelData.CityMPG;
+        HighwayMPG = curVehFuelData.HighwayMPG;
+    }
+
     @Element(name = "comb08U")
     private double CombinedMPGUnrounded;
 
