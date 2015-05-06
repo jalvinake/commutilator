@@ -165,6 +165,6 @@ public class Trip implements Comparable<Trip> {
 
     @Override
     public int compareTo(Trip other){
-        return this.getEndTime().compareTo(other.getEndTime());
+        return this.getStartTime().compareTo(other.getStartTime());
     }
 }

@@ -35,7 +35,7 @@ public class TripHistory extends ListActivity {
     }
 
     private void refreshTripsList() {
-        List<Trip> tripHistory = tripManager.getTripHistory();
+        ArrayList<Trip> tripHistory = tripManager.getTripHistory();
         Collections.sort(tripHistory);
         setListAdapter(new TripAdapter(this, R.layout.trip_item, tripHistory));
     }

@@ -186,11 +186,11 @@ public class TripManager {
     private void populateTestTrips() {
         tripHistory = new HashMap<UUID, Trip>();
 
-        Trip trip1 = new Trip(new Date(2015, 4, 4, 8, 30, 0), new Date(2015, 4, 4, 8, 56, 0), 3.12, 18.3);
-        Trip trip2 = new Trip(new Date(2015, 4, 4, 10, 40, 0), new Date(2015, 4, 4, 11, 40, 0), 2.56, 22.1);
+        Trip trip1 = new Trip(new Date(2015 - 1900, 4, 4, 8, 30, 0), new Date(2015 - 1900, 4, 4, 8, 56, 0), 3.12, 18.3);
+        Trip trip2 = new Trip(new Date(2015 - 1900, 4, 4, 10, 40, 0), new Date(2015 - 1900, 4, 4, 11, 40, 0), 2.56, 22.1);
 
-        Trip trip3 = new Trip(new Date(2015, 5, 4, 8, 30, 0), new Date(2015, 5, 4, 8, 56, 0), 3.12, 18.3);
-        Trip trip4 = new Trip(new Date(2015, 3, 4, 10, 40, 0), new Date(2015, 3, 4, 11, 40, 0), 2.56, 22.1);
+        Trip trip3 = new Trip(new Date(2015 - 1900, 5, 4, 8, 30, 0), new Date(2015 - 1900, 5, 4, 8, 56, 0), 3.12, 18.3);
+        Trip trip4 = new Trip(new Date(2015 - 1900, 3, 4, 10, 40, 0), new Date(2015 - 1900, 3, 4, 11, 40, 0), 2.56, 22.1);
 
 
         trip1.addRoutePoint(new LatLng(44.974144, -93.232254));
