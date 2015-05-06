@@ -36,6 +36,7 @@ public class Trip implements Comparable<Trip> {
     private Date startTime;
     private Date endTime;
     private List<LatLng> routePoints = new ArrayList<LatLng>();
+    private LatLng lastPoint;
     private Double distance = 0.0;
     private Double amountSaved = 0.0;
     private Double gallonsSaved = 0.0;
@@ -113,8 +114,12 @@ public class Trip implements Comparable<Trip> {
     public List<LatLng> getRoutePoints() { return routePoints; }
 
     public void addRoutePoint(LatLng point){
-        updateDistanceWithNewPoint(point);
-        routePoints.add(point);
+        //No need to add this route point if it is the same as the last one
+        if(lastPoint == null || !point.equals(lastPoint)) {
+            updateDistanceWithNewPoint(point);
+            routePoints.add(point);
+            lastPoint = point;
+        }
 
         if(distance > 0.0) {
             setGallonsSaved(calculateGallonsSaved(getDistance()));
