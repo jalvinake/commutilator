@@ -103,10 +103,13 @@ public class TripHistory extends ListActivity {
             TextView startTimeView = (TextView)view.findViewById(R.id.trip_start_time);
             TextView distanceView = (TextView)view.findViewById(R.id.trip_distance);
             TextView amountSavedView = (TextView)view.findViewById(R.id.trip_amount_saved);
+            TextView galSavedView = (TextView)view.findViewById(R.id.trip_gal_saved);
+
 
             startTimeView.setText(new SimpleDateFormat("EEE MMM dd hh:mm a").format(trip.getStartTime()));
             distanceView.setText(new DecimalFormat("0.00 miles").format(trip.getDistance()));
             amountSavedView.setText(new DecimalFormat("$0.00").format(trip.getAmountSaved()));
+            galSavedView.setText(new DecimalFormat("0.0 gal").format(trip.getGallonsSaved()));
 
             return view;
         }

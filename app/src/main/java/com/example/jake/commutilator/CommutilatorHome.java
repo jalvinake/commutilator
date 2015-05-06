@@ -120,12 +120,12 @@ public class CommutilatorHome extends ActionBarActivity {
     private void updateTripStartStopButton()
     {
         if (tripManager.getTripIsActive() == false) {
-            startStopButton.setText("START");
+            startStopButton.setText("START TRIP");
             startStopButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
             tripButton.setText("Trip History");
         }
         else {
-            startStopButton.setText("STOP");
+            startStopButton.setText("STOP TRIP");
             startStopButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
             tripButton.setText("Current Trip");
         }

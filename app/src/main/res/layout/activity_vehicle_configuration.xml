@@ -9,20 +9,22 @@
 
     <TextView
         android:text="Year:"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     <Spinner
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicle_year_selection"
         />
     <TextView
         android:text="Make:"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     <Spinner
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicle_make_selection"
@@ -30,11 +32,12 @@
          />
     <TextView
         android:text="Model:"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <Spinner
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicle_model_selection"
@@ -43,10 +46,11 @@
 
     <TextView
         android:text="Model Option:"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     <Spinner
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicle_modeloption_selection"
@@ -55,11 +59,16 @@
 
     <TextView
         android:text="Average MPG:"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/vehicle_mpg"
+        android:padding="10dp"
+        android:textSize="18dp"
+        android:textColor="@android:color/black"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
