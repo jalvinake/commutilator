@@ -91,9 +91,7 @@ public class CommutilatorHome extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (tripManager.getTripIsActive() == true) {
-                    Intent currentTripIntent = new Intent(CommutilatorHome.this, CurrentTrip.class);
-                    currentTripIntent.putExtra(CurrentTrip.CURRENT_TRIP_ID, tripManager.getCurrentTrip().getId().toString());
-                    startActivity(currentTripIntent);
+                    StartCurrentTripActivity();
                 }
                 else {
                     Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
@@ -180,11 +178,15 @@ public class CommutilatorHome extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem vehicleItem = menu.findItem(R.id.action_vehicle_configuration);
-
         //vehicleItem.setVisible(!tripManager.getTripIsActive()); -- let's just disable it for now so user knows about it
         vehicleItem.setEnabled(!tripManager.getTripIsActive());
+
+        MenuItem currentTripItem = menu.findItem(R.id.action_current_trip);
+        currentTripItem.setEnabled(tripManager.getTripIsActive());
+
         return true;
     }
+
 
 
     @Override
@@ -205,7 +207,18 @@ public class CommutilatorHome extends ActionBarActivity {
             startActivity(tripHistoryIntent);
         }
 
+        if (id == R.id.action_current_trip) {
+            StartCurrentTripActivity();
+        }
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void StartCurrentTripActivity(){
+        Intent currentTripIntent = new Intent(CommutilatorHome.this, CurrentTrip.class);
+        currentTripIntent.putExtra(CurrentTrip.CURRENT_TRIP_ID, tripManager.getCurrentTrip().getId().toString());
+        startActivity(currentTripIntent);
     }
 
     private class TripMetricsTextViewUpdater implements TripUpdateObserver{
