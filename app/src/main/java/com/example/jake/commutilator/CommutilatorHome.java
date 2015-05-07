@@ -181,9 +181,6 @@ public class CommutilatorHome extends ActionBarActivity {
         //vehicleItem.setVisible(!tripManager.getTripIsActive()); -- let's just disable it for now so user knows about it
         vehicleItem.setEnabled(!tripManager.getTripIsActive());
 
-        MenuItem currentTripItem = menu.findItem(R.id.action_current_trip);
-        currentTripItem.setEnabled(tripManager.getTripIsActive());
-
         return true;
     }
 
@@ -206,11 +203,6 @@ public class CommutilatorHome extends ActionBarActivity {
             Intent tripHistoryIntent = new Intent(CommutilatorHome.this, TripHistory.class);
             startActivity(tripHistoryIntent);
         }
-
-        if (id == R.id.action_current_trip) {
-            StartCurrentTripActivity();
-        }
-
 
         return super.onOptionsItemSelected(item);
     }
